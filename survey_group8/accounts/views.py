@@ -13,9 +13,9 @@ class SignUpView(CreateView):
         user = form.save()
         user_type = form.cleaned_data.get('user_type')
 
-        if user_type == 'Survey Taker':
+        if user_type == 'Taker':
             group = Group.objects.get(name='Taker')
-        elif user_type == 'Survey Creator':
+        elif user_type == 'Creator':
             group = Group.objects.get(name='Creator')
         else:
             group = None

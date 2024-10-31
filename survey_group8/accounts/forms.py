@@ -4,8 +4,8 @@ from django.contrib.auth.models import User
 
 class CustomUserCreationForm(UserCreationForm):
     USER_TYPE_CHOICES = [
-        ('Survey Taker', 'Survey Taker'),
-        ('Survey Creator', 'Survey Creator'),
+        ('Taker', 'Taker'),
+        ('Creator', 'Creator'),
     ]
     
     user_type = forms.ChoiceField(choices=USER_TYPE_CHOICES, widget=forms.RadioSelect)
