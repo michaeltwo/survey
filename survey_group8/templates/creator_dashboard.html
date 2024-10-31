@@ -8,7 +8,9 @@
 {% block content %}
 <div class="container">
     <h2>Survey Overview</h2>
-    
+    <hr/>
+    <a class="button-link" href="">Create a new Survey</a>
+    <br>
     <table>
         <tr>
             <th>DRAFT</th>
@@ -17,30 +19,30 @@
         </tr>
         <tr>
             <td>
-                {% for survey in draft_surveys %}
-                    {{ survey.name }}<br>
-                    <a href="{% url 'open_survey' survey.id %}">EDIT</a> |
-                    <a href="{% url 'publish_survey' survey.id %}">PUBLISH</a> |
-                    <a href="{% url 'delete_survey' survey.id %}">DELETE</a><br>
+                {% for name in draft_surveys %}
+                    {{ name }}<br>
+                    <a href="">EDIT</a> |
+                    <a href="">PUBLISH</a> |
+                    <a href="">DELETE</a><br>
                 {% empty %}
                     No drafts available.
                 {% endfor %}
             </td>
             <td>
-                {% for survey in published_surveys %}
-                    {{ survey.name }}<br>
-                    <a href="{% url 'close_survey' survey.id %}">CLOSE</a> |
-                    <a href="{% url 'draft_survey' survey.id %}">DRAFT</a> |
-                    <a href="{% url 'results_survey' survey.id %}">RESULTS</a><br>
+                {% for name in published_surveys %}
+                    {{ name }}<br>
+                    <a href="">CLOSE</a> |
+                    <a href="">DRAFT</a> |
+                    <a href="">RESULTS</a><br>
                 {% empty %}
                     No published surveys.
                 {% endfor %}
             </td>
             <td>
-                {% for survey in closed_surveys %}
-                    {{ survey.name }}<br>
-                    <a href="{% url 'republish_survey' survey.id %}">REPUBLISH</a> |
-                    <a href="{% url 'results_survey' survey.id %}">RESULTS</a><br>
+                {% for name in closed_surveys %}
+                    {{ name }}<br>
+                    <a href="">RESULTS</a> |
+                    <a href="">REPUBLISH</a><br>
                 {% empty %}
                     No closed surveys.
                 {% endfor %}
