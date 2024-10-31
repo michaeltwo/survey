@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Create New Survey{% endblock %}
+
+{% block header %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Create New Survey!</h2>
+    <hr/>
+    <form id="surveyForm" method="POST">
+        {% csrf_token %}
+        <table border="1">
+            <tr>
+                <td>Survey Name</td>
+                <td>
+                    <input type="text" name="name" placeholder="Enter Survey Name..">
+                    <span class="error" id="nameError" style="color:red;"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Survey Description</td>
+                <td>
+                    <input type="text" name="description" placeholder="Enter Survey Description..">
+                    <span class="error" id="descriptionError" style="color:red;"></span>
+                </td>
+            </tr>
+        </table>
+
+        <div id="questionsContainer">
+            <h3>Questions</h3>
+            <div class="questionBlock" id="questionBlock1">
+                <table border="1">
+                    <tr>
+                        <td>Question 1</td>
+                        <td>
+                            <input type="text" name="question_1" placeholder="Enter Question">
+                            <span class="error" id="questionError1" style="color:red;"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Question Type</td>
+                        <td>
+                            <label>
+                                <input type="radio" name="type_1" value="Radio" checked>
+                                Radio Buttons
+                            </label>
+                            <label style="margin-left: 20px;">
+                                <input type="radio" name="type_1" value="Checkboxes">
+                                Checkboxes
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Answer 1</td>
+                        <td>
+                            <input type="text" name="answer_1_1" placeholder="Enter Answer">
+                            <span class="error" id="answerError1_1" style="color:red;"></span>
+                        </td>
+                    </tr>
+                </table>
+                <button type="button" onclick="addAnswerField(1)">Add Another Answer</button>
+            </div>
+        </div>
+
+        <button type="button" onclick="addQuestion()">Add Another Question</button>
+
+        <table border="1">
+            <tr>
+                <td><input type="submit" value="Create Survey"></td>
+                <td><span class="error" id="formError" style="color:red;"></span></td>
+            </tr>
+        </table>
+    </form>
+    <div class="button-container">
+        <a class="button-link" href="">HOME</a>
+    </div>
+</div>
+
+{% load static %}
+
+<script src="{% static 'js/survey.js' %}"></script>
+{% endblock %}

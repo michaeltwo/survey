@@ -34,3 +34,20 @@ def home(request):
         return render(request, 'taker_dashboard.html')  
     
     return render(request, 'home.html')
+
+
+@login_required
+def survey_create(request):
+    if request.method == 'POST':
+        name = request.POST['name']
+        description = request.POST['description']
+        stock_quantity = request.POST['stock']
+        price = request.POST['price']
+        created_at = timezone.now()
+        updated_at = timezone.now()
+        user = request.user
+        version = 1
+        new_product = Product.objects.create(name=name, version=version, description=description, stock_quantity=stock_quantity, price=price, user=user, created_at=created_at,updated_at=updated_at)
+        Log.objects.create(version=version,name=name,description=description,stock_quantity=stock_quantity,price=price,timestamp=updated_at,modified_by_id=user.id,product_id=new_product.id, instruction='create')
+        return redirect('product_list')
+    return render(request, 'new_survey.html')

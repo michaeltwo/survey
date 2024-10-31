@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("accounts/", include("django.contrib.auth.urls")),
     path("accounts/", include("accounts.urls")),
-    #path("dashboard/", include("dashboard.urls")),
+    path("dashboard/", include("dashboard.urls")),
     path('', views.home,name='home'),
+    path('create', views.survey_create,name='survey_create'),
     ]
