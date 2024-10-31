@@ -2,6 +2,14 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 from core.models import Surveys
+from django.contrib.auth.decorators import user_passes_test
+
+def in_survey_taker_group(user):
+    return user.groups.filter(name='Taker').exists()
+
+def in_survey_creator_group(user):
+    return user.groups.filter(name='Creator').exists()
+
 
 def categorize_surveys(surveys):
     draft_surveys = []
@@ -36,7 +44,7 @@ def home(request):
     return render(request, 'home.html')
 
 
-@login_required
+@user_passes_test(in_survey_creator_group)
 def survey_create(request):
     if request.method == 'POST':
         name = request.POST['name']
