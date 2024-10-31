@@ -1,5 +1,51 @@
-Hello
-<form action="{% url 'logout' %}" method="post">
-    {% csrf_token %}
-    <button type="submit">Log Out</button>
-  </form>
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Survey Overview</h2>
+    
+    <table>
+        <tr>
+            <th>DRAFT</th>
+            <th>PUBLISHED</th>
+            <th>CLOSED</th>
+        </tr>
+        <tr>
+            <td>
+                {% for survey in draft_surveys %}
+                    {{ survey.name }}<br>
+                    <a href="{% url 'open_survey' survey.id %}">EDIT</a> |
+                    <a href="{% url 'publish_survey' survey.id %}">PUBLISH</a> |
+                    <a href="{% url 'delete_survey' survey.id %}">DELETE</a><br>
+                {% empty %}
+                    No drafts available.
+                {% endfor %}
+            </td>
+            <td>
+                {% for survey in published_surveys %}
+                    {{ survey.name }}<br>
+                    <a href="{% url 'close_survey' survey.id %}">CLOSE</a> |
+                    <a href="{% url 'draft_survey' survey.id %}">DRAFT</a> |
+                    <a href="{% url 'results_survey' survey.id %}">RESULTS</a><br>
+                {% empty %}
+                    No published surveys.
+                {% endfor %}
+            </td>
+            <td>
+                {% for survey in closed_surveys %}
+                    {{ survey.name }}<br>
+                    <a href="{% url 'republish_survey' survey.id %}">REPUBLISH</a> |
+                    <a href="{% url 'results_survey' survey.id %}">RESULTS</a><br>
+                {% empty %}
+                    No closed surveys.
+                {% endfor %}
+            </td>
+        </tr>
+    </table>
+</div>
+{% endblock %}

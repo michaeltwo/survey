@@ -1,16 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <title>{% block title %}Survey Group 8{% endblock %}</title>
+    <meta charset="utf-8">
+    <title>{% block title %}Survey Managemetn{% endblock %}</title>
+    {% block header %}
+    {% endblock %}
 </head>
 
 <body>
   <main>
+    <nav>
+        {% if user.is_authenticated %}
+            <span class="greeting">Hi {{ user.username }}!</span>
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Log Out</button>
+            </form>
+        {% endif %}
+    </nav>
     {% block content %}
     {% endblock %}
+  
   </main>
+  {% block script %}
+  {% endblock %}
+
 </body>
 
 </html>
