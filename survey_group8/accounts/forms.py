@@ -1,16 +1,15 @@
-# forms.py
 from django import forms
-from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 class CustomUserCreationForm(UserCreationForm):
-    user_type = forms.ChoiceField(
-        choices=[('taker', 'Survey Taker'), ('creator', 'Survey Creator')],
-        widget=forms.RadioSelect,
-        required=True,
-        label='User Type'
-    )
+    USER_TYPE_CHOICES = [
+        ('Survey Taker', 'Survey Taker'),
+        ('Survey Creator', 'Survey Creator'),
+    ]
+    
+    user_type = forms.ChoiceField(choices=USER_TYPE_CHOICES, widget=forms.RadioSelect)
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'first_name', 'last_name', 'user_type', 'password1', 'password2')
+        fields = ('username', 'first_name', 'last_name', 'email', 'user_type', 'password1', 'password2')
