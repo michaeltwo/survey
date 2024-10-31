@@ -11,3 +11,6 @@ def home(request):
         return render(request, 'taker_dashboard.html')  # Template for takers
     else:
         return render(request, 'home.html')  
+
+def taker(request):
+    pass
