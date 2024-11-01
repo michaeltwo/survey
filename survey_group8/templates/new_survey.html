@@ -12,7 +12,7 @@
 <div class="container">
     <h2>Create New Survey!</h2>
     <hr/>
-    <form id="surveyForm" method="POST">
+    <form id="surveyForm">
         {% csrf_token %}
         <table border="1">
             <tr>
@@ -33,10 +33,10 @@
 
         <div id="questionsContainer">
             <h3>Questions</h3>
-            <!-- No initial question block -->
+            
         </div>
 
-        <!-- Add question button, displayed initially with no questions -->
+        
         <button type="button" onclick="addQuestion()">Add Question</button>
 
         <table border="1">

@@ -3,7 +3,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 from core.models import Surveys, Questions, Answers, Results
 from django.contrib.auth.decorators import user_passes_test
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden,JsonResponse
+import json
+
 
 def in_survey_taker_group(user):
     return user.groups.filter(name='Taker').exists()
@@ -49,66 +51,100 @@ def home(request):
 @user_passes_test(in_survey_creator_group)
 def survey_create(request):
     if request.method == 'POST':
-        name = request.POST.get('name')
-        description = request.POST.get('description')
-        user = request.user  
-        
-        new_survey = Surveys.objects.create(
-            name=name,
-            description=description,
-            user_id=user,
-            republished=0,  
-            status='d'  
-        )
+        try:
+            data = json.loads(request.body) 
+            name = data.get('name')
+            description = data.get('description')
+            user = request.user
 
-        
-        question_number = 1
-        while True:
-            question_key = f'question_{question_number}'
-            question_text = request.POST.get(question_key)
-            
-            if not question_text:
-                break  
-
-            question_type = request.POST.get(f'type_{question_number}', 'Radio')  
-            question = Questions.objects.create(
-                survey_id=new_survey,
-                question=question_text,
-                type=question_type
+            # Create a new survey instance
+            new_survey = Surveys.objects.create(
+                name=name,
+                description=description,
+                user_id=user,
+                republished=0,
+                status='d'
             )
 
-            answer_number = 1
-            while True:
-                answer_key = f'answer_{question_number}_{answer_number}'
-                answer_text = request.POST.get(answer_key)
+            # Process each question in the JSON data
+            questions = data.get('questions', {})
+            for q_number, q_data in questions.items():
+                question_text = q_data.get('question')
+                question_type = q_data.get('type', 'Radio')
 
-                if not answer_text:
-                    break  
-
-                Answers.objects.create(
-                    question_id=question,
-                    answer=answer_text
+                # Create a question instance
+                question = Questions.objects.create(
+                    survey_id=new_survey,
+                    question=question_text,
+                    type=question_type
                 )
-                answer_number += 1
 
-            question_number += 1
+                # Process each answer for the question
+                answers = q_data.get('answers', {})
+                for a_text in answers.values():
+                    if a_text:
+                        Answers.objects.create(
+                            question_id=question,
+                            answer=a_text
+                        )
 
-        return redirect('home')
+            return JsonResponse({'status': 'success', 'message': 'Survey created successfully'})
+        
+        except json.JSONDecodeError:
+            return JsonResponse({'status': 'error', 'message': 'Invalid JSON data'}, status=400)
 
     return render(request, 'new_survey.html')
 
+@login_required
 def survey_delete(request, id):
     delete_survey = Surveys.objects.get(id=id)
     delete_survey.delete()
     return redirect('home')
 
+@login_required
 def survey_publish(request, id):
     publish_survey = get_object_or_404(Surveys, id=id)
 
     if publish_survey.user_id != request.user:
         return HttpResponseForbidden("You do not have permission to publish this survey.")
-
-    # Proceed to publish the survey
     publish_survey.status = 'p' 
     publish_survey.save()  
     return redirect('home')  
+
+@login_required
+def survey_close(request, id):
+    close_survey = get_object_or_404(Surveys, id=id)
+
+    if close_survey.user_id != request.user:
+        return HttpResponseForbidden("You do not have permission to close this survey.")
+    
+    close_survey.status = 'c' 
+    close_survey.save()  
+    return redirect('home') 
+
+@login_required
+def survey_draft(request, id):
+    draft_survey = get_object_or_404(Surveys, id=id)
+
+    if draft_survey.user_id != request.user:
+        return HttpResponseForbidden("You do not have permission to draft this survey.")
+    
+    draft_survey.status = 'd' 
+    draft_survey.save()  
+    return redirect('home') 
+
+@login_required
+def survey_republish(request, id):
+    repubish_survey = get_object_or_404(Surveys, id=id)
+
+    if repubish_survey.user_id != request.user:
+        return HttpResponseForbidden("You do not have permission to republish this survey.")
+    
+    repubish_survey.status = 'p' 
+    repubish_survey.republished += 1
+    repubish_survey.save()  
+    return redirect('home')
+
+@login_required
+def survey_edit(request, id):
+    return render(request, 'survey_edit.html')

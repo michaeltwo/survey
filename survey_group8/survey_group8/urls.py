@@ -25,7 +25,11 @@ urlpatterns = [
     path("accounts/", include("accounts.urls")),
     path("dashboard/", include("dashboard.urls")),
     path('', views.home,name='home'),
-    path('create', views.survey_create,name='survey_create'),
+    path('create/', views.survey_create,name='survey_create'),
     path('deletesurvey/<int:id>', views.survey_delete, name='survey_delete'),
     path('publishsurvey/<int:id>', views.survey_publish, name='survey_publish'),
+    path('closesurvey/<int:id>', views.survey_close, name='survey_close'),
+    path('draftsurvey/<int:id>', views.survey_draft, name='survey_draft'),
+    path('republishsurvey/<int:id>', views.survey_republish, name='survey_republish'),
+    path('edit/<int:id>', views.survey_edit, name='survey_edit'),
     ]
