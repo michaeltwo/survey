@@ -26,4 +26,6 @@ urlpatterns = [
     path("dashboard/", include("dashboard.urls")),
     path('', views.home,name='home'),
     path('create', views.survey_create,name='survey_create'),
+    path('deletesurvey/<int:id>', views.survey_delete, name='survey_delete'),
+    path('publishsurvey/<int:id>', views.survey_publish, name='survey_publish'),
     ]
