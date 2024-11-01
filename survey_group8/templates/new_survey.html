@@ -55,15 +55,18 @@
                             </label>
                         </td>
                     </tr>
-                    <tr>
-                        <td>Answer 1</td>
-                        <td>
-                            <input type="text" name="answer_1_1" placeholder="Enter Answer">
-                            <span class="error" id="answerError1_1" style="color:red;"></span>
-                        </td>
-                    </tr>
+                    <tbody id="answersContainer_1">
+                        <tr>
+                            <td>Answer 1</td>
+                            <td>
+                                <input type="text" name="answer_1_1" placeholder="Enter Answer">
+                                <span class="error" id="answerError1_1" style="color:red;"></span>
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
                 <button type="button" onclick="addAnswerField(1)">Add Another Answer</button>
+                <button type="button" onclick="removeQuestion(1)" id="removeQuestionBtn1" style="display: none;">Remove Question</button>
             </div>
         </div>
 
@@ -82,6 +85,5 @@
 </div>
 
 {% load static %}
-
 <script src="{% static 'js/survey.js' %}"></script>
 {% endblock %}

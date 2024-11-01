@@ -1,4 +1,4 @@
-let questionCount = 1; // Keep track of the number of questions
+let questionCount = 1; // Track the number of questions
 
 function addQuestion() {
     questionCount++;
@@ -31,32 +31,83 @@ function addQuestion() {
                     </label>
                 </td>
             </tr>
-            <tr>
-                <td>Answer 1</td>
-                <td>
-                    <input type="text" name="answer_${questionCount}_1" placeholder="Enter Answer">
-                    <span class="error" id="answerError${questionCount}_1" style="color:red;"></span>
-                </td>
-            </tr>
+            <tbody id="answersContainer_${questionCount}">
+                <tr>
+                    <td>Answer 1</td>
+                    <td>
+                        <input type="text" name="answer_${questionCount}_1" placeholder="Enter Answer">
+                        <span class="error" id="answerError${questionCount}_1" style="color:red;"></span>
+                    </td>
+                </tr>
+            </tbody>
         </table>
         <button type="button" onclick="addAnswerField(${questionCount})">Add Another Answer</button>
+        <button type="button" onclick="removeQuestion(${questionCount})" id="removeQuestionBtn${questionCount}" style="display: none;">Remove Question</button>
     `;
 
     questionsContainer.appendChild(newQuestionBlock);
+
+    // Update visibility of "Remove Question" buttons
+    updateQuestionButtons();
+}
+
+function removeQuestion(questionId) {
+    const questionBlock = document.getElementById(`questionBlock${questionId}`);
+    questionBlock.remove();
+    questionCount--;
+
+    // Update visibility of "Remove Question" buttons
+    updateQuestionButtons();
+}
+
+function updateQuestionButtons() {
+    const questionBlocks = document.querySelectorAll('.questionBlock');
+    questionBlocks.forEach((block) => {
+        const removeButton = block.querySelector('button[id^="removeQuestionBtn"]');
+        if (removeButton) {
+            removeButton.style.display = questionBlocks.length > 1 ? 'inline' : 'none';
+        }
+    });
 }
 
 function addAnswerField(questionNumber) {
-    const answerCount = document.querySelectorAll(`input[name^='answer_${questionNumber}']`).length + 1; // Count existing answers
-    const questionBlock = document.getElementById(`questionBlock${questionNumber}`);
+    const answersContainer = document.getElementById(`answersContainer_${questionNumber}`);
+    const answerCount = answersContainer.querySelectorAll("input[type='text']").length + 1;
 
-    const newAnswerField = document.createElement('tr');
-    newAnswerField.innerHTML = `
+    const newAnswerRow = document.createElement('tr');
+    newAnswerRow.id = `answerField_${questionNumber}_${answerCount}`;
+    newAnswerRow.innerHTML = `
         <td>Answer ${answerCount}</td>
         <td>
             <input type="text" name="answer_${questionNumber}_${answerCount}" placeholder="Enter Answer">
+            <button type="button" onclick="removeAnswer(${questionNumber}, ${answerCount})">Remove Answer</button>
             <span class="error" id="answerError${questionNumber}_${answerCount}" style="color:red;"></span>
         </td>
     `;
+    answersContainer.appendChild(newAnswerRow);
 
-    questionBlock.querySelector('table').appendChild(newAnswerField);
+    // Update visibility of "Remove Answer" buttons
+    updateAnswerButtons(questionNumber);
 }
+
+function removeAnswer(questionNumber, answerId) {
+    const answerField = document.getElementById(`answerField_${questionNumber}_${answerId}`);
+    answerField.remove();
+
+    // Update visibility of "Remove Answer" buttons
+    updateAnswerButtons(questionNumber);
+}
+
+function updateAnswerButtons(questionNumber) {
+    const answersContainer = document.getElementById(`answersContainer_${questionNumber}`);
+    const answerFields = answersContainer.querySelectorAll("tr[id^='answerField_']");
+    answerFields.forEach((answerField) => {
+        const removeButton = answerField.querySelector('button');
+        if (removeButton) {
+            removeButton.style.display = answerFields.length > 1 ? 'inline' : 'none';
+        }
+    });
+}
+
+// Initialize by hiding the remove buttons if there is only one question
+document.addEventListener('DOMContentLoaded', updateQuestionButtons);
