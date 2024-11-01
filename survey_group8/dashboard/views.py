@@ -51,13 +51,12 @@ def home(request):
 @user_passes_test(in_survey_creator_group)
 def survey_create(request):
     if request.method == 'POST':
+        print(request.body)
         try:
             data = json.loads(request.body) 
             name = data.get('name')
             description = data.get('description')
             user = request.user
-
-            # Create a new survey instance
             new_survey = Surveys.objects.create(
                 name=name,
                 description=description,
@@ -66,20 +65,17 @@ def survey_create(request):
                 status='d'
             )
 
-            # Process each question in the JSON data
             questions = data.get('questions', {})
             for q_number, q_data in questions.items():
                 question_text = q_data.get('question')
                 question_type = q_data.get('type', 'Radio')
 
-                # Create a question instance
                 question = Questions.objects.create(
                     survey_id=new_survey,
                     question=question_text,
                     type=question_type
                 )
 
-                # Process each answer for the question
                 answers = q_data.get('answers', {})
                 for a_text in answers.values():
                     if a_text:
@@ -146,5 +142,67 @@ def survey_republish(request, id):
     return redirect('home')
 
 @login_required
+@login_required
 def survey_edit(request, id):
-    return render(request, 'survey_edit.html')
+    old_survey = get_object_or_404(Surveys, id=id)
+
+    if request.method == 'POST':
+
+        try:
+            data = json.loads(request.body)
+            name = data.get('name')
+            description = data.get('description')
+
+        
+            old_survey.name = name
+            old_survey.description = description
+            old_survey.save()  
+
+
+            Questions.objects.filter(survey_id=old_survey).delete()
+            Answers.objects.filter(question_id__survey_id=old_survey).delete()
+
+            questions = data.get('questions', {})
+            for q_number, q_data in questions.items():
+                if isinstance(q_data, dict): 
+                    question_text = q_data.get('question')
+                    question_type = q_data.get('type', 'Radio')
+
+                    question = Questions.objects.create(
+                        survey_id=old_survey,
+                        question=question_text,
+                        type=question_type
+                    )
+
+                    answers = q_data.get('answers', {})
+                    for a_text in answers.values():
+                        if a_text:
+                            Answers.objects.create(
+                                question_id=question,
+                                answer=a_text
+                            )
+                else:
+                    print(f"Unexpected format for question: {q_data}")
+                    return JsonResponse({'status': 'error', 'message': 'Invalid question format'}, status=400)
+
+            return JsonResponse({'status': 'success', 'message': 'Survey updated successfully'})
+        
+        except json.JSONDecodeError:
+            return JsonResponse({'status': 'error', 'message': 'Invalid JSON data'}, status=400)
+
+    questions = Questions.objects.filter(survey_id=old_survey)
+
+    questions_data = []
+    for question in questions:
+        answers = Answers.objects.filter(question_id=question)
+        answers_data = {answer.id: answer.answer for answer in answers}
+        questions_data.append({
+            'question': question,
+            'answers': answers_data 
+        })
+
+    context = {
+        'survey': old_survey,
+        'questions_data': questions_data
+    }
+    return render(request, 'survey_edit.html', context)

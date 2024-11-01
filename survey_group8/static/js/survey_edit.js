@@ -74,8 +74,7 @@ function removeAnswer(qId, aId) {
     if (aField) aField.remove();
 }
 
-
-document.getElementById('surveyCreateForm').addEventListener('submit', function(event) {
+document.getElementById('surveyEditForm').addEventListener('submit', function(event) {
     event.preventDefault(); 
 
     const formData = new FormData(this);
@@ -100,7 +99,9 @@ document.getElementById('surveyCreateForm').addEventListener('submit', function(
         }
     });
 
-    fetch('/create/', {
+    const surveyId = this.getAttribute('data-survey-id'); 
+
+    fetch(`/edit/${surveyId}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -120,7 +121,4 @@ document.getElementById('surveyCreateForm').addEventListener('submit', function(
         console.error('Error:', error);
     });
 });
-
-
-
 
