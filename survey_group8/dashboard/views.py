@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
-from core.models import Surveys
+from core.models import Surveys, Questions, Answers, Results
 from django.contrib.auth.decorators import user_passes_test
 
 def in_survey_taker_group(user):
@@ -47,15 +47,50 @@ def home(request):
 @user_passes_test(in_survey_creator_group)
 def survey_create(request):
     if request.method == 'POST':
-        name = request.POST['name']
-        description = request.POST['description']
-        stock_quantity = request.POST['stock']
-        price = request.POST['price']
-        created_at = timezone.now()
-        updated_at = timezone.now()
-        user = request.user
-        version = 1
-        new_product = Product.objects.create(name=name, version=version, description=description, stock_quantity=stock_quantity, price=price, user=user, created_at=created_at,updated_at=updated_at)
-        Log.objects.create(version=version,name=name,description=description,stock_quantity=stock_quantity,price=price,timestamp=updated_at,modified_by_id=user.id,product_id=new_product.id, instruction='create')
-        return redirect('product_list')
+        name = request.POST.get('name')
+        description = request.POST.get('description')
+        user = request.user  
+        
+        new_survey = Surveys.objects.create(
+            name=name,
+            description=description,
+            user_id=user,
+            republished=0,  
+            status='d'  
+        )
+
+        
+        question_number = 1
+        while True:
+            question_key = f'question_{question_number}'
+            question_text = request.POST.get(question_key)
+            
+            if not question_text:
+                break  
+
+            question_type = request.POST.get(f'type_{question_number}', 'Radio')  
+            question = Questions.objects.create(
+                survey_id=new_survey,
+                question=question_text,
+                type=question_type
+            )
+
+            answer_number = 1
+            while True:
+                answer_key = f'answer_{question_number}_{answer_number}'
+                answer_text = request.POST.get(answer_key)
+
+                if not answer_text:
+                    break  
+
+                Answers.objects.create(
+                    question_id=question,
+                    answer=answer_text
+                )
+                answer_number += 1
+
+            question_number += 1
+
+        return redirect('home')
+
     return render(request, 'new_survey.html')
