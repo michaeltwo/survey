@@ -32,34 +32,41 @@
     ]
 </script>
 
-{% for question in question_data %}
-    <div class="question-section">
-        <h2>Question: {{ question.question_text }}</h2>
-        
-        <table style="width: 100%; border-collapse: collapse;">
-            <thead>
-                <tr>
-                    <th style="border: 1px solid #ddd; padding: 8px;">Question</th>
-                    <th style="border: 1px solid #ddd; padding: 8px;">Responses</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td style="border: 1px solid #ddd; padding: 8px;">{{ question.question_text }}</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">
-                        {% for answer in question.answers %}
-                            <div>
-                                <strong>{{ answer.answer_text }}:</strong> {{ answer.count }} ({{ answer.percentage }}%)
-                            </div>
-                        {% endfor %}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+{% if total_respondents == 0 %}
+    <tr>
+        <td colspan="2" style="text-align:center;">No responses yet</td>
+    </tr>
+{% else %}
 
-        <canvas id="chart-{{ forloop.counter }}" width="400" height="200"></canvas>
-    </div>
-{% endfor %}
+    {% for question in question_data %}
+        <div class="question-section">
+            <h2>Question: {{ question.question_text }}</h2>
+            
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th style="border: 1px solid #ddd; padding: 8px;">Question</th>
+                        <th style="border: 1px solid #ddd; padding: 8px;">Responses</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{ question.question_text }}</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">
+                            {% for answer in question.answers %}
+                                <div>
+                                    <strong>{{ answer.answer_text }}:</strong> {{ answer.count }} ({{ answer.percentage }}%)
+                                </div>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <canvas id="chart-{{ forloop.counter }}" width="400" height="200"></canvas>
+        </div>
+    {% endfor %}
+{% endif %}
 
 <div class="button-container" style="margin-top: 20px;">
     <a class="button-link" href="{% url 'home' %}">HOME</a>
