@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+<h1>Results for Survey: {{ survey.name }}</h1>
+<p>{{ survey.description }}</p>
+<p><strong>Total Respondents:</strong> {{ total_respondents }}</p>
+
+<!-- Include Chart.js for bar chart generation-->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- JSON data for the questions as JavaScript cannot JavaScript running in the browser cannot directly access Django objects or variables -->
+<script type="application/json" id="question-data">
+    [
+        {% for question in question_data %}
+        {
+            "question_text": "{{ question.question_text }}",
+            "answers": [
+                {% for answer in question.answers %}
+                {
+                    "answer_text": "{{ answer.answer_text }}",
+                    "count": {{ answer.count }}
+                }{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+                ]
+        }{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+    ]
+</script>
+
+{% for question in question_data %}
+    <div class="question-section">
+        <h2>Question: {{ question.question_text }}</h2>
+        
+        <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th style="border: 1px solid #ddd; padding: 8px;">Question</th>
+                    <th style="border: 1px solid #ddd; padding: 8px;">Responses</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ question.question_text }}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">
+                        {% for answer in question.answers %}
+                            <div>
+                                <strong>{{ answer.answer_text }}:</strong> {{ answer.count }} ({{ answer.percentage }}%)
+                            </div>
+                        {% endfor %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <canvas id="chart-{{ forloop.counter }}" width="400" height="200"></canvas>
+    </div>
+{% endfor %}
+
+<div class="button-container" style="margin-top: 20px;">
+    <a class="button-link" href="{% url 'home' %}">HOME</a>
+    <button onclick="window.print()">Print Results</button>
+</div>
+
+{% load static %}
+
+<script src="{% static 'js/survey_results.js' %}"></script>
+
+{% endblock %}

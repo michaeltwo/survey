@@ -33,7 +33,7 @@
                     {{ survey.name }}<br>
                     <a href="closesurvey/{{ survey.id }}" onclick="return confirm('Are you sure you want to close the survey?')">CLOSE</a> |
                     <a href="draftsurvey/{{ survey.id }}" onclick="return confirm('Are you sure you want to draft the survey?')">DRAFT</a> |
-                    <a href="">RESULTS</a><br>
+                    <a href="results/published/{{ survey.id }}">RESULTS</a><br>
                 {% empty %}
                     No published surveys.
                 {% endfor %}
@@ -41,7 +41,7 @@
             <td>
                 {% for survey in closed_surveys %}
                     {{ survey.name }}<br>
-                    <a href="">RESULTS</a> |
+                    <a href="results/{{ survey.id }}">RESULTS</a> |
                     <a href="republishsurvey/{{ survey.id }}" onclick="return confirm('Are you sure you want to republish the survey?')">REPUBLISH</a><br>
                 {% empty %}
                     No closed surveys.
