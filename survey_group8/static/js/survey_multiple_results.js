@@ -80,7 +80,7 @@ function createResultsTable(questionText, questionData, totalRespondentsData) {
 
         versionsSet.forEach(version => {
             const resultData = answerInfo.versions[version];
-            const cellContent = resultData ? `${resultData.count} responses (${resultData.percentage.toFixed(1)}%)` : '0 responses (0.0%)';
+            const cellContent = resultData ? `${resultData.count} (${resultData.percentage.toFixed(1)}%)` : '0 (0.0%)';
             row.innerHTML += `<td style="border: 1px solid #ddd; padding: 8px;">${cellContent}</td>`;
         });
 

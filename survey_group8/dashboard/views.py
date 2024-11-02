@@ -61,7 +61,7 @@ def survey_create(request):
                 name=name,
                 description=description,
                 user_id=user,
-                republished=0,
+                republished=1,
                 status='d'
             )
 
