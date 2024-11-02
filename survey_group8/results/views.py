@@ -2,9 +2,20 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from core.models import Surveys, Questions, Answers, Results
 from django.db.models import Max
+from django.http import Http404
+
+def survey_results_closed(request, id):
+    return HttpResponse("Hello world!")
 
 def survey_results_published(request, id):
     survey = Surveys.objects.get(id=id)
+
+    if survey.status != 'p': # check if survey is in publish mode
+        raise Http404("Survey not available.")
+    
+    if survey.user_id != request.user:
+        raise Http404("You do not have permission to view these results.")
+    
     questions = survey.questions.all()  
 
     max_republished = Surveys.objects.filter(pk=id).aggregate(Max('republished'))['republished__max'] #

@@ -41,7 +41,7 @@
             <td>
                 {% for survey in closed_surveys %}
                     {{ survey.name }}<br>
-                    <a href="results/{{ survey.id }}">RESULTS</a> |
+                    <a href="results/closed/{{ survey.id }}">RESULTS</a> |
                     <a href="republishsurvey/{{ survey.id }}" onclick="return confirm('Are you sure you want to republish the survey?')">REPUBLISH</a><br>
                 {% empty %}
                     No closed surveys.
