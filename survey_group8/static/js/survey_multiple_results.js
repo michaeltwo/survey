@@ -4,8 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function getSurveyIdFromURL() {
-    const pathSegments = window.location.pathname.split('/');
-    return pathSegments[pathSegments.length - 2];
+    const segments = window.location.pathname.split('/');
+    return segments[segments.length - 2]; // ID should be in second last place
 }
 
 function fetchSurveyResults(surveyId) {
@@ -54,7 +54,7 @@ function createResultsTable(questionText, questionData, totalRespondentsData) {
     const headerRow = document.createElement('tr');
     headerRow.innerHTML = '<th style="border: 1px solid #ddd; padding: 8px;">Question</th><th style="border: 1px solid #ddd; padding: 8px;">Answer</th>';
 
-    const versionsSet = new Set();
+    const versionsSet = new Set(); // unique set of version ids from the answers of a questoin
     for (const answerInfo of Object.values(questionData.answers)) {
         for (const version of Object.keys(answerInfo.versions)) {
             versionsSet.add(version);
