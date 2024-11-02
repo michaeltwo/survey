@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Survey Results{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+<h1 id="survey-name">Results for Survey: {{ survey.name }}</h1>
+<p id="survey-description">{{ survey.description }}</p>
+
+<div id="results-container"></div>
+
+<div class="button-container" style="margin-top: 20px;">
+    <a class="button-link" href="{% url 'home' %}">HOME</a>
+    <button onclick="window.print()">Print Results</button>
+</div>
+
+{% load static %}
+<script src="{% static 'js/survey_multiple_results.js' %}"></script>
+{% endblock %}
