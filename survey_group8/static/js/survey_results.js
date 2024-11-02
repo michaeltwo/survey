@@ -4,10 +4,11 @@ document.addEventListener('DOMContentLoaded', function () {
     questionData.forEach((question, index) => {
         const ctx = document.getElementById('chart-' + (index + 1)).getContext('2d');
         const labels = question.answers.map(answer => answer.answer_text);
-        const totalResponses = question.answers.reduce((sum, answer) => sum + answer.count, 0);
-        const dataCounts = totalResponses > 0
-            ? question.answers.map(answer => ((answer.count / totalResponses) * 100).toFixed(2)) 
-            : question.answers.map(() => 0); 
+        const totalRespondentsQuestion = question.total_respondents_question;
+
+        const dataCounts = totalRespondentsQuestion > 0
+            ? question.answers.map(answer => ((answer.count / totalRespondentsQuestion) * 100).toFixed(2))
+            : question.answers.map(() => 0);
 
         const data = {
             labels: labels,
@@ -24,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
             scales: {
                 y: {
                     beginAtZero: true,
-                    max: 100 
+                    max: 100
                 }
             }
         };

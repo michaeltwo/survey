@@ -19,6 +19,7 @@
         {% for question in question_data %}
         {
             "question_text": "{{ question.question_text }}",
+            "total_respondents_question": {{ question.total_respondents_question }},
             "answers": [
                 {% for answer in question.answers %}
                 {
@@ -26,7 +27,7 @@
                     "count": {{ answer.count }}
                 }{% if not forloop.last %}, {% endif %}
                 {% endfor %}
-                ]
+            ]
         }{% if not forloop.last %}, {% endif %}
         {% endfor %}
     ]
