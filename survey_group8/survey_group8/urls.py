@@ -32,4 +32,5 @@ urlpatterns = [
     path('draftsurvey/<int:id>', views.survey_draft, name='survey_draft'),
     path('republishsurvey/<int:id>', views.survey_republish, name='survey_republish'),
     path('edit/<int:id>', views.survey_edit, name='survey_edit'),
+    path("results/", include("results.urls")),
     ]
