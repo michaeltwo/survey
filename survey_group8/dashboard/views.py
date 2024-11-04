@@ -206,3 +206,8 @@ def survey_edit(request, id):
         'questions_data': questions_data
     }
     return render(request, 'survey_edit.html', context)
+
+    def survey_take(request, id):
+        surveys = Survey.objects.filter(publish='p')
+        return render(request, 'taker_dashboard.html', {'surveys': surveys})
+    
