@@ -21,7 +21,6 @@ class Questions(models.Model):
 class Answers(models.Model):
     question_id = models.ForeignKey(Questions, on_delete=models.CASCADE, related_name='answers')
     answer = models.TextField()
-    user = models.ForeignKey(User, default=0,on_delete=models.CASCADE)
     def __str__(self):
         return self.answer
 

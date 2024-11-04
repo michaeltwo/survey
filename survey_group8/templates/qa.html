@@ -1,9 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{{ survey.name }}</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
     <h1>{{ survey.name }}</h1>
     <!-- {% debug %} -->
     <form method="post">
@@ -16,5 +18,4 @@
         {% endfor %}
         <button type="submit">Submit Answers</button>
     </form>
-</body>
-</html>
+{% endblock %}

@@ -1,10 +1,11 @@
-Hello
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Published Surveys</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
     <h1>Published Surveys</h1>
     <table border = "1">
     <tr>
@@ -23,9 +24,4 @@ Hello
             <td>No Published Surveys</td>
         {% endfor %}
     </tr>
-    <form action="{% url 'logout' %}" method="post">
-      {% csrf_token %}
-    <button type="submit">Log Out</button>
-    </form>
-</body>
-</html>
+    {% endblock %}
