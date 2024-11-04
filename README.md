@@ -76,7 +76,9 @@ NOTE. Remember your username and password
 ## Contributing
 
 Please let us know if any confusion, 
+
 Group: 8
+
 Group Members: Michael Fasching, Weihua Zheng, Dev Shah, Shubham Ganesh Junnarkar
 
 ## License
