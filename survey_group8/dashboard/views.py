@@ -5,7 +5,8 @@ from core.models import Surveys, Questions, Answers, Results
 from django.contrib.auth.decorators import user_passes_test
 from django.http import HttpResponseForbidden,JsonResponse
 import json
-
+from django import forms
+from .forms  import AnswerForm
 
 def in_survey_taker_group(user):
     return user.groups.filter(name='Taker').exists()
@@ -43,7 +44,9 @@ def home(request):
         return render(request, 'creator_dashboard.html', survey_context)
     
     elif request.user.groups.filter(name='Taker').exists():
-        return render(request, 'taker_dashboard.html')  
+        #MZ
+        surveytake=survey_take(request)
+        return render(request, 'taker_dashboard.html',surveytake)  
     
     return render(request, 'home.html')
 
@@ -207,7 +210,50 @@ def survey_edit(request, id):
     }
     return render(request, 'survey_edit.html', context)
 
-    def survey_take(request, id):
-        surveys = Survey.objects.filter(publish='p')
-        return render(request, 'taker_dashboard.html', {'surveys': surveys})
+#--- MZ ---
+def survey_take(request):
+    surveys = Surveys.objects.filter(status='p')
+    surveys = {
+        "surveys":surveys
+    }
+    return surveys
+
+@login_required
+def survey_questions_answers(request,id):
+    survey = get_object_or_404(Surveys, id=id, status='p')
+    questions = survey.questions.all()
+    # AnswerFormSet = forms.modelformset_factory(Answers, form=AnswerForm, extra=len(questions))
+    question_forms = []
+    if request.method=='POST':
+        # formset = AnswerFormSet(request.POST, queryset=Answers.objects.none())
+        for question in questions:
+            form = AnswerForm(request.POST, prefix=str(question.id))
+            if form.is_valid():
+            # 保存每个答案并关联用户和问题
+                # for form, question in zip(formset, questions):
+                answer = form.save(commit=False)
+                answer.user = request.user
+                answer.question_id = question
+                answer.save()
+            question_forms.append((question,form))
+        return redirect('thankyou')  # 提交后重定向到成功页面
+
+    # 否则显示所有问题的空表单
+    else:
+        # formset = AnswerFormSet(queryset=Answers.objects.none())
+        for question in questions:
+            form = AnswerForm(prefix=str(question.id))
+            question_forms.append((question, form))
+            # question_pairs = zip(questions, formset.forms)
+    context={
+        'survey': survey,
+        'questions': questions,
+        'question_forms':question_forms
+        # 'question_pairs': question_pairs,
+    }
+    return render(request, 'qa.html',context)
+
+def thankyou(request):
+    return render(request, 'thankyou.html')
+
     

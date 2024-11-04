@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ survey.name }}</title>
+</head>
+<body>
+    <h1>{{ survey.name }}</h1>
+    <!-- {% debug %} -->
+    <form method="post">
+        {% csrf_token %}
+        {% for question, form in question_forms %}
+            <div>
+                <p>{{ question.question }}</p>
+                {{ form.answer }}
+            </div>
+        {% endfor %}
+        <button type="submit">Submit Answers</button>
+    </form>
+</body>
+</html>
