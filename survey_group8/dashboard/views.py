@@ -212,11 +212,26 @@ def survey_edit(request, id):
 
 #--- MZ ---
 def survey_take(request):
-    surveys = Surveys.objects.filter(status='p')
-    surveys = {
-        "surveys":surveys
-    }
-    return surveys
+    # surveys = Surveys.objects.filter(status='p')
+    ids_with_status_p = Surveys.objects.filter(status="p").values_list('id', flat=True)
+    # print(list(ids_with_status_p))
+    mydict={}
+    for j in list(ids_with_status_p):
+        if Results.objects.filter(survey_id=j).exists():
+            mydict['thanks']='Thanks' #保留下次使用，和前端takser_dashboard中的if判断匹配
+        else:
+            surveys = Surveys.objects.filter(id=j).values('id', 'name', 'description')
+            mydict['surveys'] = surveys
+    # print(mydict)
+    return mydict
+
+# def survey_take(request):
+#     surveys = Surveys.objects.filter(status='p')
+#     surveys = {
+#         "surveys":surveys
+#     }
+#     print (surveys)
+#     return surveys
 
 def qa_view(request, id):
     survey = Surveys.objects.prefetch_related('questions__answers').get(id=id, status='p')
