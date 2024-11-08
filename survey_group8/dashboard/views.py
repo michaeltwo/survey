@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 from core.models import Surveys, Questions, Answers, Results
 from django.contrib.auth.decorators import user_passes_test
-from django.http import HttpResponseForbidden,JsonResponse
+from django.http import HttpResponseForbidden,JsonResponse,HttpResponse
 import json
 from django import forms
 from .forms  import AnswerForm
@@ -44,7 +44,7 @@ def home(request):
         return render(request, 'creator_dashboard.html', survey_context)
     
     elif request.user.groups.filter(name='Taker').exists():
-        #MZ
+        #---MZ---
         surveytake=survey_take(request)
         return render(request, 'taker_dashboard.html',surveytake)  
     
@@ -218,40 +218,36 @@ def survey_take(request):
     }
     return surveys
 
-@login_required
-def survey_questions_answers(request,id):
-    survey = get_object_or_404(Surveys, id=id, status='p')
+def qa_view(request, id):
+    survey = Surveys.objects.prefetch_related('questions__answers').get(id=id, status='p')
+    # republished_ver=survey.republished #直接在前端引用
+    user=request.user
     questions = survey.questions.all()
-    # AnswerFormSet = forms.modelformset_factory(Answers, form=AnswerForm, extra=len(questions))
-    question_forms = []
-    if request.method=='POST':
-        # formset = AnswerFormSet(request.POST, queryset=Answers.objects.none())
-        for question in questions:
-            form = AnswerForm(request.POST, prefix=str(question.id))
-            if form.is_valid():
-            # 保存每个答案并关联用户和问题
-                # for form, question in zip(formset, questions):
-                answer = form.save(commit=False)
-                answer.user = request.user
-                answer.question_id = question
-                answer.save()
-            question_forms.append((question,form))
-        return redirect('thankyou')  # 提交后重定向到成功页面
+    return render(request, 'qa.html', {'survey': survey, 'questions': questions,'user':user})
 
-    # 否则显示所有问题的空表单
-    else:
-        # formset = AnswerFormSet(queryset=Answers.objects.none())
-        for question in questions:
-            form = AnswerForm(prefix=str(question.id))
-            question_forms.append((question, form))
-            # question_pairs = zip(questions, formset.forms)
-    context={
-        'survey': survey,
-        'questions': questions,
-        'question_forms':question_forms
-        # 'question_pairs': question_pairs,
-    }
-    return render(request, 'qa.html',context)
+@login_required
+def qa_submit(request):
+    if request.method == 'POST':
+        survey_id = request.POST.get('survey_id')
+        user = request.user
+        survey = get_object_or_404(Surveys, id=survey_id)
+        republished_ver=survey.republished
+        # 获取问题和答案，保存到 Result 表
+        for question in survey.questions.all():
+            selected_answers = request.POST.getlist(f'question_{question.id}')  # 获取选择的答案
+            
+            for answer_id in selected_answers:
+                answer = get_object_or_404(Answers, id=answer_id)
+                # 保存结果
+                Results.objects.create(
+                    survey_id=survey,
+                    question_id=question,
+                    answer_id=answer,
+                    user_id=user,
+                    republished_version=republished_ver
+                )
+        return render(request,'thankyou.html')
+    return HttpResponse('Invalid request method.', status=405)
 
 def thankyou(request):
     return render(request, 'thankyou.html')

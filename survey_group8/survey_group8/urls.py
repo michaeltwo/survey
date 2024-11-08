@@ -33,7 +33,8 @@ urlpatterns = [
     path('republishsurvey/<int:id>', views.survey_republish, name='survey_republish'),
     path('edit/<int:id>', views.survey_edit, name='survey_edit'),
     path("results/", include("results.urls")),
-    path('survey_take/',views.survey_take,name='survey_take'),
-    path('qa/<int:id>',views.survey_questions_answers,name='survey_questions_answers'),
-    path('thankyou/',views.thankyou,name='thankyou')
+    path('survey_take/', views.survey_take, name='survey_take'),
+    path('qa/<int:id>/', views.qa_view, name='qa_view'),
+    path('qa_submit/', views.qa_submit, name='qa_submit'),
+    path('thankyou/', views.thankyou, name='thankyou'),
     ]

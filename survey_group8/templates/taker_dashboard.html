@@ -6,22 +6,25 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Published Surveys</h1>
-    <table border = "1">
+<h1>Published Surveys</h1>
+<table border = "1">
     <tr>
         <th>Survey ID</th>
         <th>Survey Items</th>
         <th>Survey Description</th>
         <th>Actions</th>
     </tr>
-        {% for survey in surveys %}
-    <tr>
-        <td>{{ survey.id }}</td>
-        <td>{{ survey.name }}</td>
-        <td>{{ survey.description }}</td>
-        <td><a href="qa/{{survey.id}}">Click to Start</a></td>
-        {% empty %}
+    {% for survey in surveys %}
+        <tr>
+            <td>{{ survey.id }}</td>
+            <td>{{ survey.name }}</td>
+            <td>{{ survey.description }}</td>
+            <td><a href="{% url 'qa_view' survey.id %}">Click to Start</a></td>
+        </tr>
+    {% empty %}
+        <tr>
             <td>No Published Surveys</td>
-        {% endfor %}
-    </tr>
-    {% endblock %}
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}

@@ -1,21 +1,32 @@
-{% extends "base.html" %}
+<form method="post" action="{% url 'qa_submit' %}">
+    {% csrf_token %}
+    <input type="hidden" name="survey_id" value="{{ survey.id }}">
+    <input type="hidden" name="user" value="{{user}}">
 
-{% block title %}Dashboard{% endblock %}
-
-{% block header %}
-{% endblock %}
-
-{% block content %}
-    <h1>{{ survey.name }}</h1>
-    <!-- {% debug %} -->
-    <form method="post">
-        {% csrf_token %}
-        {% for question, form in question_forms %}
-            <div>
-                <p>{{ question.question }}</p>
-                {{ form.answer }}
-            </div>
-        {% endfor %}
-        <button type="submit">Submit Answers</button>
-    </form>
-{% endblock %}
+    <h2>{{ survey.name }}</h2>
+    <p1>{{ survey.description }}</p1>
+    <br>
+    <p2>Republished Version:{{ survey.republished }}</p2>
+    {% for question in questions %}
+        <fieldset>
+            <legend>{{ question.question }}</legend>
+            {% if question.type == "Radio" %}
+                {% for answer in question.answers.all %}
+                    <label>
+                        <input type="radio" name="question_{{ question.id }}" value="{{ answer.id }}">
+                        {{ answer.answer }}
+                    </label><br>
+                {% endfor %}
+            {% elif question.type == "Checkboxes" %}
+                {% for answer in question.answers.all %}
+                    <label>
+                        <input type="checkbox" name="question_{{ question.id }}" value="{{ answer.id }}">
+                        {{ answer.answer }}
+                    </label><br>
+                {% endfor %}
+            {% endif %}
+        </fieldset>
+    {% endfor %}
+    
+    <button type="submit">Submit</button>
+</form>
