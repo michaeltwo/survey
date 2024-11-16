@@ -7,6 +7,8 @@ from django.http import HttpResponseForbidden,JsonResponse,HttpResponse
 import json
 from django import forms
 from .forms  import AnswerForm
+from django.db.models import Count
+from django.db.models import F
 
 def in_survey_taker_group(user):
     return user.groups.filter(name='Taker').exists()
@@ -214,15 +216,20 @@ def survey_edit(request, id):
 def survey_take(request):
     # surveys = Surveys.objects.filter(status='p')
     ids_with_status_p = Surveys.objects.filter(status="p").values_list('id', flat=True)
-    # print(list(ids_with_status_p))
-    mydict={}
+    print(list(ids_with_status_p))
+    mydict = {'surveys': [],'not_exist':None}
     for j in list(ids_with_status_p):
-        if Results.objects.filter(survey_id=j).exists():
-            mydict['thanks']='Thanks' #保留下次使用，和前端takser_dashboard中的if判断匹配
-        else:
-            surveys = Surveys.objects.filter(id=j).values('id', 'name', 'description')
-            mydict['surveys'] = surveys
-    # print(mydict)
+        if not Results.objects.filter(survey_id=j).exists(): #判断result中没有survey中为p的survery_id,则开始survey
+            surveys = Surveys.objects.filter(id=j).values('id', 'name', 'description','republished')
+            mydict['surveys'].extend(surveys)
+            mydict['not_exist'] = 'not_exist'
+        elif Results.objects.filter(survey_id=j).exists() and Surveys.objects.filter(republished__gt=1): #result中存在且republish>1 则change mind,
+            surveys = Surveys.objects.filter(id=j,republished__gt=1).exclude(id__in=Results.objects.filter(republished_version=F('survey_id__republished')).values('survey_id'))
+            # surveys = Surveys.objects.filter(id=j,republished__gt=1).values('id', 'name', 'description','republished')
+            mydict['surveys'].extend(surveys)
+        # elif Results.objects.filter(survey_id=j,republished__gt=1).exists():
+    
+    print(mydict)
     return mydict
 
 # def survey_take(request):
@@ -264,7 +271,35 @@ def qa_submit(request):
         return render(request,'thankyou.html')
     return HttpResponse('Invalid request method.', status=405)
 
-def thankyou(request):
-    return render(request, 'thankyou.html')
+def thankyou(request,survey_id):
+    results = Results.objects.filter(survey_id=survey_id)
+    stats = (
+        results.values('question_id', 'answer_id')
+        .annotate(count=Count('id'))  # 每个答案的回答数量
+    )
+    question_totals = (
+        results.values('question_id')
+        .annotate(total=Count('id'))  # 每个问题的回答总数
+    )
+    question_totals_dict = {item['question_id']: item['total'] for item in question_totals}
+    for stat in stats:
+        question_id = stat['question_id']
+        total = question_totals_dict.get(question_id, 0)
+        stat['percentage'] = (stat['count'] / total * 100) if total > 0 else 0
+    
+    from collections import defaultdict
+    grouped_stats = defaultdict(list)
+    for stat in stats:
+        grouped_stats[stat['question_id']].append({
+            'answer_id': stat['answer_id'],
+            'count': stat['count'],
+            'percentage': stat['percentage'],
+        })
+    context = {
+        'survey_id': survey_id,
+        'grouped_stats': grouped_stats,  # {question_id: [{answer_id, count, percentage}, ...]}
+    }
+    return render(request, 'thankyou.html',context)
+
 
     
