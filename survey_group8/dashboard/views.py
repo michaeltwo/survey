@@ -219,7 +219,7 @@ def survey_take(request):
     # print(list(ids_with_status_p))
     mydict = {'surveys': [],'not_exist':None}
     for j in list(ids_with_status_p):
-        if not Results.objects.filter(survey_id=j).exists(): #判断result中没有survey中为p的survery_id,则开始survey
+        if not Results.objects.filter(survey_id=j,user_id=request.user).exists(): #判断result中没有survey中为p的survery_id,则开始survey
             surveys = Surveys.objects.filter(id=j).values('id', 'name', 'description','republished')
             mydict['surveys'].extend(surveys)
             mydict['not_exist'] = 'not_exist'
@@ -275,14 +275,12 @@ def qa_submit(request):
 def thankyou(request,id):
     # print(id)
     results = Results.objects.filter(survey_id=id)
-    a=Results.objects.filter(survey_id=id).values('question__name')
-    print(a)
     # print(results)
     stats = (
         results.values('question_id', 'answer_id')
         .annotate(count=Count('id'))  # 每个答案的回答数量
     )
-    # print(stats)
+    print(stats)
     question_totals = (
         results.values('question_id')
         .annotate(total=Count('id'))  # 每个问题的回答总数
@@ -298,8 +296,11 @@ def thankyou(request,id):
     from collections import defaultdict
     grouped_stats = defaultdict(list)
     for stat in stats:
-        grouped_stats[stat['question_id']].append({
-            'answer_id': stat['answer_id'],
+        question=Questions.objects.filter(id=stat['question_id']).values_list('question', flat=True).first() #find id对应的quesiton
+        answer=Answers.objects.filter(question_id=stat['question_id']).values_list('answer', flat=True).first() #find question_id对应的answer
+        grouped_stats[question].append({
+            'answer_id': answer,
+            # 'answer_id': stat['answer_id'],
             'count': stat['count'],
             'percentage': stat['percentage'],
         })
