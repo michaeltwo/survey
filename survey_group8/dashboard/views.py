@@ -216,7 +216,7 @@ def survey_edit(request, id):
 def survey_take(request):
     # surveys = Surveys.objects.filter(status='p')
     ids_with_status_p = Surveys.objects.filter(status="p").values_list('id', flat=True)
-    print(list(ids_with_status_p))
+    # print(list(ids_with_status_p))
     mydict = {'surveys': [],'not_exist':None}
     for j in list(ids_with_status_p):
         if not Results.objects.filter(survey_id=j).exists(): #判断result中没有survey中为p的survery_id,则开始survey
@@ -229,7 +229,7 @@ def survey_take(request):
             mydict['surveys'].extend(surveys)
         # elif Results.objects.filter(survey_id=j,republished__gt=1).exists():
     
-    print(mydict)
+    # print(mydict)
     return mydict
 
 # def survey_take(request):
@@ -268,20 +268,26 @@ def qa_submit(request):
                     user_id=user,
                     republished_version=republished_ver
                 )
-        return render(request,'thankyou.html')
+        # return render(request,'thankyou.html')
+        return redirect('thankyou',id=survey_id) #pass the id as survey_id to thankyou
     return HttpResponse('Invalid request method.', status=405)
 
-def thankyou(request,survey_id):
-    results = Results.objects.filter(survey_id=survey_id)
+def thankyou(request,id):
+    # print(id)
+    results = Results.objects.filter(survey_id=id)
+    # print(results)
     stats = (
         results.values('question_id', 'answer_id')
         .annotate(count=Count('id'))  # 每个答案的回答数量
     )
+    # print(stats)
     question_totals = (
         results.values('question_id')
         .annotate(total=Count('id'))  # 每个问题的回答总数
     )
+    print(question_totals)
     question_totals_dict = {item['question_id']: item['total'] for item in question_totals}
+    print(question_totals_dict)
     for stat in stats:
         question_id = stat['question_id']
         total = question_totals_dict.get(question_id, 0)
@@ -295,8 +301,11 @@ def thankyou(request,survey_id):
             'count': stat['count'],
             'percentage': stat['percentage'],
         })
+    print(grouped_stats)
+    grouped_stats = dict(grouped_stats)
+    print(grouped_stats)
     context = {
-        'survey_id': survey_id,
+        'survey_id': id,
         'grouped_stats': grouped_stats,  # {question_id: [{answer_id, count, percentage}, ...]}
     }
     return render(request, 'thankyou.html',context)

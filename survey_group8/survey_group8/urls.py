@@ -36,5 +36,5 @@ urlpatterns = [
     path('survey_take/', views.survey_take, name='survey_take'),
     path('qa/<int:id>/', views.qa_view, name='qa_view'),
     path('qa_submit/', views.qa_submit, name='qa_submit'),
-    path('thankyou/', views.thankyou, name='thankyou'),
+    path('thankyou/<int:id>/', views.thankyou, name='thankyou'),
     ]

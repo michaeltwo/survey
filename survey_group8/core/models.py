@@ -30,5 +30,5 @@ class Results(models.Model):
     answer_id = models.ForeignKey(Answers, on_delete=models.CASCADE, related_name='answer_results')  
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_results')
     republished_version = models.IntegerField()
-    def __str__(self):
-        return self.republished_version
+    def as_int(self):
+        return self.survey_id
