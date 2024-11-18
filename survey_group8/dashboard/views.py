@@ -275,6 +275,8 @@ def qa_submit(request):
 def thankyou(request,id):
     # print(id)
     results = Results.objects.filter(survey_id=id)
+    a=Results.objects.filter(survey_id=id).values('question__name')
+    print(a)
     # print(results)
     stats = (
         results.values('question_id', 'answer_id')
@@ -285,9 +287,9 @@ def thankyou(request,id):
         results.values('question_id')
         .annotate(total=Count('id'))  # 每个问题的回答总数
     )
-    print(question_totals)
+    # print(question_totals)
     question_totals_dict = {item['question_id']: item['total'] for item in question_totals}
-    print(question_totals_dict)
+    # print(question_totals_dict)
     for stat in stats:
         question_id = stat['question_id']
         total = question_totals_dict.get(question_id, 0)
@@ -301,9 +303,9 @@ def thankyou(request,id):
             'count': stat['count'],
             'percentage': stat['percentage'],
         })
-    print(grouped_stats)
-    grouped_stats = dict(grouped_stats)
-    print(grouped_stats)
+    # print(grouped_stats)
+    grouped_stats = dict(grouped_stats) #必须把defaultdict转换成dic,否则不显示
+    # print(grouped_stats)
     context = {
         'survey_id': id,
         'grouped_stats': grouped_stats,  # {question_id: [{answer_id, count, percentage}, ...]}
