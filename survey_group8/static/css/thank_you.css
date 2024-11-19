@@ -75,3 +75,24 @@
 .results-table td {
     color: #333;
 }
+
+.button-container {
+    text-align: center;
+    margin-top: 30px;
+}
+
+
+.button-link {
+    background-color: #1a75ff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.button-link:hover {
+    background-color: #0056b3;
+}

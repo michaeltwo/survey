@@ -4,7 +4,6 @@
 {% block header %}
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/survey_taker.css' %}">
-
 {% endblock %}
 
 {% block content %}
@@ -14,22 +13,22 @@
         <input type="hidden" name="survey_id" value="{{ survey.id }}">
         <input type="hidden" name="user" value="{{ user }}">
 
-        <!-- Survey Header -->
+
         <div class="survey-header">
             <h2 class="survey-title">{{ survey.name }}</h2>
             <p class="survey-description">{{ survey.description }}</p>
             <p class="survey-version">Republished Version: {{ survey.republished }}</p>
         </div>
 
-        <!-- Questions Section -->
+
         <div class="questions-section">
             {% for question in questions %}
                 <fieldset class="question-fieldset">
                     <legend class="question-legend">{{ question.question }}</legend>
                     <table class="answers-table">
                         <colgroup>
-                            <col style="width: 10%;"> <!-- Input column -->
-                            <col style="width: 90%;"> <!-- Label column -->
+                            <col style="width: 10%;"> 
+                            <col style="width: 90%;"> 
                         </colgroup>
                         {% if question.type == "Radio" %}
                             {% for answer in question.answers.all %}
@@ -59,9 +58,9 @@
             {% endfor %}
         </div>
 
-        <!-- Submit Button -->
         <div class="button-container">
             <button type="submit" class="submit-button">Submit</button>
+            <a class="button-link button-link-match" href="{% url 'home' %}">HOME</a>
         </div>
     </form>
 </div>
