@@ -12,41 +12,55 @@ function addQuestion() {
     qBlock.id = `qBlock_${qId}`;
     qBlock.innerHTML = `
         <table class="new-survey-table">
-            <tr>
-                <td>Question</td>
-                <td>
-                    <input type="text" name="question_${qId}" placeholder="Enter Question">
-                    <span class="error" id="qError${qId}" style="color:red;"></span>
-                </td>
-            </tr>
-            <tr>
-                <td>Question Type</td>
-                <td>
-                    <label>
-                        <input type="radio" name="type_${qId}" value="Radio" checked> Radio Buttons
-                    </label>
-                    <label style="margin-left: 20px;">
-                        <input type="radio" name="type_${qId}" value="Checkboxes"> Checkboxes
-                    </label>
-                </td>
-            </tr>
-            <tbody id="aContainer_${qId}">
-                <tr id="aField_${qId}_1">
-                    <td>Answer</td>
+    <tr>
+        <td>Question</td>
+        <td>
+            <input type="text" name="question_${qId}" placeholder="Enter Question">
+            <span class="error" id="qError${qId}" style="color:red;"></span>
+        </td>
+    </tr>
+    <tr>
+        <td>Question Type</td>
+        <td>
+            <table class="question-type-table">
+                <tr>
                     <td>
-                        <div class="answer-row">
-                            <input type="text" name="answer_${qId}_1" placeholder="Enter Answer">
-                            <button type="button" class="new-survey-btn" onclick="removeAnswer(${qId}, 1)">Remove Answer</button>
-                        </div>
-                        <span class="error" id="aError${qId}_1" style="color:red;"></span>
+                        <input type="radio" name="type_${qId}" value="Radio" checked>
+                    </td>
+                    <td>
+                        <label>Radio Buttons</label>
                     </td>
                 </tr>
-            </tbody>
-        </table>
-        <div class="question-buttons">
-            <button type="button" class="new-survey-btn" onclick="addAnswerField(${qId})">Add Another Answer</button>
-            <button type="button" class="new-survey-btn" onclick="removeQuestion(${qId})" id="removeQBtn${qId}">Remove Question</button>
-        </div>
+                <tr>
+                    <td>
+                        <input type="radio" name="type_${qId}" value="Checkboxes">
+                    </td>
+                    <td>
+                        <label>Checkboxes</label>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tbody id="aContainer_${qId}">
+        <tr id="aField_${qId}_1">
+            <td>Answer</td>
+            <td>
+                <div class="answer-row">
+                    <input type="text" name="answer_${qId}_1" placeholder="Enter Answer">
+                    <button type="button" class="new-survey-btn" onclick="removeAnswer(${qId}, 1)">Remove Answer</button>
+                </div>
+                <span class="error" id="aError${qId}_1" style="color:red;"></span>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div class="question-buttons">
+    <button type="button" class="new-survey-btn" onclick="addAnswerField(${qId})">Add Another Answer</button>
+    <button type="button" class="new-survey-btn" onclick="removeQuestion(${qId})" id="removeQBtn${qId}">Remove Question</button>
+</div>
+
+
     `;
     qContainer.appendChild(qBlock);
 }

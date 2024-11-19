@@ -629,3 +629,27 @@ table td:empty {
         font-size: 0.9em;
     }
 }
+
+/* Question Type Table */
+.question-type-table {
+    width: 100%;
+    border-spacing: 0; 
+}
+
+.question-type-table td {
+    vertical-align: middle; 
+    text-align: center; 
+    padding: 0; 
+    height: 40px; 
+}
+
+.question-type-table input {
+    margin: 0; 
+    display: inline-block;
+}
+
+.question-type-table label {
+    display: inline-block;
+    font-size: 1em;
+    color: #333;
+}
