@@ -3,7 +3,10 @@
 
 <head>
     <meta charset="utf-8">
-    <title>{% block title %}Survey Managemetn{% endblock %}</title>
+    <title>{% block title %}Survey Management{% endblock %}</title>
+    {% load static %}
+    <!-- Link to the CSS file -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     {% block header %}
     {% endblock %}
 </head>

@@ -22,15 +22,23 @@ document.addEventListener('DOMContentLoaded', function () {
         };
 
         const options = {
+            responsive: true,
+            maintainAspectRatio: true, // Enable aspect ratio maintenance
+            aspectRatio: 2, // Adjust the width-to-height ratio (2 means width is 2x height)
             scales: {
                 y: {
                     beginAtZero: true,
                     max: 100
                 }
+            },
+            plugins: {
+                legend: {
+                    display: false // Hide the legend for simplicity
+                }
             }
         };
 
-        const chart = new Chart(ctx, {
+        new Chart(ctx, {
             type: 'bar',
             data: data,
             options: options

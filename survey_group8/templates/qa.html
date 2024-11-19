@@ -1,32 +1,68 @@
-<form method="post" action="{% url 'qa_submit' %}">
-    {% csrf_token %}
-    <input type="hidden" name="survey_id" value="{{ survey.id }}">
-    <input type="hidden" name="user" value="{{user}}">
+{% extends "base.html" %}
 
-    <h2>{{ survey.name }}</h2>
-    <p1>{{ survey.description }}</p1>
-    <br>
-    <p2>Republished Version:{{ survey.republished }}</p2>
-    {% for question in questions %}
-        <fieldset>
-            <legend>{{ question.question }}</legend>
-            {% if question.type == "Radio" %}
-                {% for answer in question.answers.all %}
-                    <label>
-                        <input type="radio" name="question_{{ question.id }}" value="{{ answer.id }}">
-                        {{ answer.answer }}
-                    </label><br>
-                {% endfor %}
-            {% elif question.type == "Checkboxes" %}
-                {% for answer in question.answers.all %}
-                    <label>
-                        <input type="checkbox" name="question_{{ question.id }}" value="{{ answer.id }}">
-                        {{ answer.answer }}
-                    </label><br>
-                {% endfor %}
-            {% endif %}
-        </fieldset>
-    {% endfor %}
-    
-    <button type="submit">Submit</button>
-</form>
+{% block title %}Take Survey{% endblock %}
+{% block header %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/survey_taker.css' %}">
+
+{% endblock %}
+
+{% block content %}
+<div class="survey-container">
+    <form method="post" action="{% url 'qa_submit' %}">
+        {% csrf_token %}
+        <input type="hidden" name="survey_id" value="{{ survey.id }}">
+        <input type="hidden" name="user" value="{{ user }}">
+
+        <!-- Survey Header -->
+        <div class="survey-header">
+            <h2 class="survey-title">{{ survey.name }}</h2>
+            <p class="survey-description">{{ survey.description }}</p>
+            <p class="survey-version">Republished Version: {{ survey.republished }}</p>
+        </div>
+
+        <!-- Questions Section -->
+        <div class="questions-section">
+            {% for question in questions %}
+                <fieldset class="question-fieldset">
+                    <legend class="question-legend">{{ question.question }}</legend>
+                    <table class="answers-table">
+                        <colgroup>
+                            <col style="width: 10%;"> <!-- Input column -->
+                            <col style="width: 90%;"> <!-- Label column -->
+                        </colgroup>
+                        {% if question.type == "Radio" %}
+                            {% for answer in question.answers.all %}
+                                <tr>
+                                    <td>
+                                        <input type="radio" name="question_{{ question.id }}" value="{{ answer.id }}">
+                                    </td>
+                                    <td>
+                                        <label>{{ answer.answer }}</label>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% elif question.type == "Checkboxes" %}
+                            {% for answer in question.answers.all %}
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" name="question_{{ question.id }}" value="{{ answer.id }}">
+                                    </td>
+                                    <td>
+                                        <label>{{ answer.answer }}</label>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                    </table>
+                </fieldset>
+            {% endfor %}
+        </div>
+
+        <!-- Submit Button -->
+        <div class="button-container">
+            <button type="submit" class="submit-button">Submit</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

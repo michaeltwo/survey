@@ -30,7 +30,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+STATIC_VERSION = 1 
 # Application definition
 
 INSTALLED_APPS = [

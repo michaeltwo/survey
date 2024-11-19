@@ -1,0 +1,87 @@
+/* Container for the survey */
+.survey-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Survey header styling */
+.survey-header {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.survey-title {
+    font-size: 1.8em;
+    color: #004080;
+    margin-bottom: 10px;
+}
+
+.survey-description {
+    font-size: 1.2em;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.survey-version {
+    font-size: 1em;
+    color: #888;
+}
+
+/* Questions section */
+.questions-section {
+    margin-top: 20px;
+}
+
+.question-fieldset {
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.question-legend {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #003366;
+    margin-bottom: 10px;
+}
+
+/* Table for answers */
+.answers-table {
+    width: 100%;
+    table-layout: fixed; /* Ensures consistent column widths */
+    border-spacing: 5px;
+}
+
+.answers-table td {
+    vertical-align: middle; /* Align inputs and labels in the same line */
+    padding: 5px;
+}
+
+.answers-table input {
+    margin-right: 8px;
+}
+
+/* Submit button styling */
+.button-container {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.submit-button {
+    background-color: #1a75ff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background-color: #0056b3;
+}

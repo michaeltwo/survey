@@ -1,0 +1,77 @@
+/* Thank You Page Container */
+.thank-you-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Header Section */
+.thank-you-header {
+    margin-bottom: 20px;
+}
+
+.thank-you-title {
+    font-size: 2em;
+    color: #004080;
+    margin-bottom: 10px;
+}
+
+.thank-you-message {
+    font-size: 1.2em;
+    color: #666;
+}
+
+/* Survey Results Section */
+.survey-results {
+    margin-top: 20px;
+}
+
+.results-title {
+    font-size: 1.5em;
+    color: #003366;
+    margin-bottom: 20px;
+}
+
+/* Question Section */
+.question-section {
+    margin-bottom: 30px;
+}
+
+.question-title {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #0056b3;
+    margin-bottom: 10px;
+}
+
+/* Results Table */
+.results-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.results-table th,
+.results-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    font-size: 1em;
+}
+
+.results-table th {
+    background-color: #f0f8ff;
+    color: #004080;
+    font-weight: bold;
+}
+
+.results-table td {
+    color: #333;
+}

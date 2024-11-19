@@ -1,16 +1,17 @@
+let qId = 0;
+
 function getCSRFToken() {
     return document.querySelector('[name=csrfmiddlewaretoken]').value;
 }
 
-let qId = 0;
 function addQuestion() {
     qId++;
     const qContainer = document.getElementById('questionsContainer');
     const qBlock = document.createElement('div');
-    qBlock.className = 'questionBlock';
+    qBlock.className = 'question-block';
     qBlock.id = `qBlock_${qId}`;
     qBlock.innerHTML = `
-        <table border="1">
+        <table class="new-survey-table">
             <tr>
                 <td>Question</td>
                 <td>
@@ -22,12 +23,10 @@ function addQuestion() {
                 <td>Question Type</td>
                 <td>
                     <label>
-                        <input type="radio" name="type_${qId}" value="Radio" checked>
-                        Radio Buttons
+                        <input type="radio" name="type_${qId}" value="Radio" checked> Radio Buttons
                     </label>
                     <label style="margin-left: 20px;">
-                        <input type="radio" name="type_${qId}" value="Checkboxes">
-                        Checkboxes
+                        <input type="radio" name="type_${qId}" value="Checkboxes"> Checkboxes
                     </label>
                 </td>
             </tr>
@@ -35,15 +34,19 @@ function addQuestion() {
                 <tr id="aField_${qId}_1">
                     <td>Answer</td>
                     <td>
-                        <input type="text" name="answer_${qId}_1" placeholder="Enter Answer">
-                        <button type="button" onclick="removeAnswer(${qId}, 1)">Remove Answer</button>
+                        <div class="answer-row">
+                            <input type="text" name="answer_${qId}_1" placeholder="Enter Answer">
+                            <button type="button" class="new-survey-btn" onclick="removeAnswer(${qId}, 1)">Remove Answer</button>
+                        </div>
                         <span class="error" id="aError${qId}_1" style="color:red;"></span>
                     </td>
                 </tr>
             </tbody>
         </table>
-        <button type="button" onclick="addAnswerField(${qId})">Add Another Answer</button>
-        <button type="button" onclick="removeQuestion(${qId})" id="removeQBtn${qId}" style="display: inline;">Remove Question</button>
+        <div class="question-buttons">
+            <button type="button" class="new-survey-btn" onclick="addAnswerField(${qId})">Add Another Answer</button>
+            <button type="button" class="new-survey-btn" onclick="removeQuestion(${qId})" id="removeQBtn${qId}">Remove Question</button>
+        </div>
     `;
     qContainer.appendChild(qBlock);
 }
@@ -61,8 +64,10 @@ function addAnswerField(qId) {
     aRow.innerHTML = `
         <td>Answer</td>
         <td>
-            <input type="text" name="answer_${qId}_${aCount}" placeholder="Enter Answer">
-            <button type="button" onclick="removeAnswer(${qId}, ${aCount})">Remove Answer</button>
+            <div class="answer-row">
+                <input type="text" name="answer_${qId}_${aCount}" placeholder="Enter Answer">
+                <button type="button" class="new-survey-btn" onclick="removeAnswer(${qId}, ${aCount})">Remove Answer</button>
+            </div>
             <span class="error" id="aError${qId}_${aCount}" style="color:red;"></span>
         </td>
     `;
@@ -73,7 +78,6 @@ function removeAnswer(qId, aId) {
     const aField = document.getElementById(`aField_${qId}_${aId}`);
     if (aField) aField.remove();
 }
-
 
 document.getElementById('surveyCreateForm').addEventListener('submit', function(event) {
     event.preventDefault(); 
@@ -104,7 +108,7 @@ document.getElementById('surveyCreateForm').addEventListener('submit', function(
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'X-CSRFToken': getCSRFToken()  
+            'X-CSRFToken': getCSRFToken()
         },
         body: JSON.stringify(jsonData)
     })
@@ -120,7 +124,3 @@ document.getElementById('surveyCreateForm').addEventListener('submit', function(
         console.error('Error:', error);
     });
 });
-
-
-
-

@@ -1,26 +1,45 @@
-<html>
-    <h1>Survey Complete, Thank you</h1>
+{% extends "base.html" %}
 
-    <h2>Survey Results for Survey ID: {{ survey_id|default:"No Survey ID" }}</h2>  
-    {% for question_id, stats in grouped_stats.items %}
-        <h3>Question ID: {{ question_id }}</h3>
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>Answer ID</th>
-                    <th>Count</th>
-                    <th>Percentage</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for stat in stats %}
+{% block title %}Thank You{% endblock %}
+{% block header %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/survey_taker.css' %}">
+
+{% endblock %}
+
+{% block content %}
+<div class="thank-you-container">
+    <div class="thank-you-header">
+        <h1 class="thank-you-title">Survey Complete</h1>
+        <p class="thank-you-message">Thank you for your participation!</p>
+    </div>
+
+    <div class="survey-results">
+        <h2 class="results-title">Survey Results for Survey ID: {{ survey_id|default:"No Survey ID" }}</h2>
+        
+        {% for question_id, stats in grouped_stats.items %}
+        <div class="question-section">
+            <h3 class="question-title">Question ID: {{ question_id }}</h3>
+            <table class="results-table">
+                <thead>
+                    <tr>
+                        <th>Answer ID</th>
+                        <th>Count</th>
+                        <th>Percentage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for stat in stats %}
                     <tr>
                         <td>{{ stat.answer_id }}</td>
                         <td>{{ stat.count }}</td>
                         <td>{{ stat.percentage|floatformat:2 }}%</td>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% endfor %}
-</html>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
