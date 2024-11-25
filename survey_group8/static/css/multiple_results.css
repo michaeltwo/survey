@@ -59,7 +59,7 @@ td {
 /* Chart styling */
 canvas {
     max-width: 80%; /* Allow the chart to take up to 80% of the container */
-    height: 400px; /* Set a fixed height for larger charts */
+    height: 400px; /* For larger charts, set a fixed height. */
     display: block;
     margin: 20px auto; /* Center the chart */
 }
@@ -88,7 +88,7 @@ canvas {
     background-color: #0056b3;
 }
 
-/* Responsive design */
+/* Design that is responsive */
 @media (max-width: 600px) {
     .results-title {
         font-size: 1.5em;
