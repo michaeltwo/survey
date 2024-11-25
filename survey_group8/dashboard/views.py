@@ -278,7 +278,7 @@ def thankyou(request,id):
     # print(results)
     stats = (
         results.values('question_id', 'answer_id')
-        .annotate(count=Count('id'))  # 每个答案的回答数量
+        .annotate(count=Count('id'))  # Number of responses per answer
     )
     print(stats)
     question_totals = (
