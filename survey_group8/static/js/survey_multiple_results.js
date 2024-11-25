@@ -73,7 +73,7 @@ function createResultsTable(questionText, questionData, totalRespondentsData) {
     }
     table.appendChild(headerRow);
 
-    // Populate the table rows with answers and their corresponding publication data
+    // Add responses and the relevant publishing data to the table rows.
     for (const [answerText, answerInfo] of Object.entries(questionData.answers)) {
         const row = document.createElement('tr');
         row.innerHTML = `<td style="border: 1px solid #ddd; padding: 8px;">${answerText}</td>`;
@@ -90,7 +90,7 @@ function createResultsTable(questionText, questionData, totalRespondentsData) {
         table.appendChild(row);
     }
 
-    // Add a row for the bar chart
+    // For the bar chart, add a row.
     const canvasRow = document.createElement('tr');
     const canvasCell = document.createElement('td');
     canvasCell.colSpan = 2 + totalRespondentsData.length; // Span across all columns
