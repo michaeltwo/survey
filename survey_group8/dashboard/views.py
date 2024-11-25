@@ -219,11 +219,11 @@ def survey_take(request):
     # print(list(ids_with_status_p))
     mydict = {'surveys': [],'not_exist':None}
     for j in list(ids_with_status_p):
-        if not Results.objects.filter(survey_id=j,user_id=request.user).exists(): #判断result中没有survey中为p的survery_id,则开始survey
+        if not Results.objects.filter(survey_id=j,user_id=request.user).exists(): #If it is judged that there is no survey_id of p in the survey in the result, then the survey will be started.
             surveys = Surveys.objects.filter(id=j).values('id', 'name', 'description','republished')
             mydict['surveys'].extend(surveys)
             mydict['not_exist'] = 'not_exist'
-        elif Results.objects.filter(survey_id=j).exists() and Surveys.objects.filter(republished__gt=1): #result中存在且republish>1 则change mind,
+        elif Results.objects.filter(survey_id=j).exists() and Surveys.objects.filter(republished__gt=1): #If it exists in result and republish>1, then change mind,
             surveys = Surveys.objects.filter(id=j,republished__gt=1).exclude(id__in=Results.objects.filter(republished_version=F('survey_id__republished')).values('survey_id'))
             # surveys = Surveys.objects.filter(id=j,republished__gt=1).values('id', 'name', 'description','republished')
             mydict['surveys'].extend(surveys)
