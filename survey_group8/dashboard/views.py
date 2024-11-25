@@ -296,8 +296,8 @@ def thankyou(request,id):
     from collections import defaultdict
     grouped_stats = defaultdict(list)
     for stat in stats:
-        question=Questions.objects.filter(id=stat['question_id']).values_list('question', flat=True).first() #find id对应的quesiton
-        answer=Answers.objects.filter(question_id=stat['question_id']).values_list('answer', flat=True).first() #find question_id对应的answer
+        question=Questions.objects.filter(id=stat['question_id']).values_list('question', flat=True).first() #find question corresponding to id
+        answer=Answers.objects.filter(question_id=stat['question_id']).values_list('answer', flat=True).first() #find the answer corresponding to question_id
         grouped_stats[question].append({
             'answer_id': answer,
             # 'answer_id': stat['answer_id'],
