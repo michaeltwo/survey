@@ -305,7 +305,7 @@ def thankyou(request,id):
             'percentage': stat['percentage'],
         })
     # print(grouped_stats)
-    grouped_stats = dict(grouped_stats) #必须把defaultdict转换成dic,否则不显示
+    grouped_stats = dict(grouped_stats) #Defaultdict must be converted into dict, otherwise it will not be displayed
     # print(grouped_stats)
     context = {
         'survey_id': id,
