@@ -283,7 +283,7 @@ def thankyou(request,id):
     print(stats)
     question_totals = (
         results.values('question_id')
-        .annotate(total=Count('id'))  # Total number of answers for each question
+        .annotate(total=Count('id'))  # The total number of responses to every question
     )
     # print(question_totals)
     question_totals_dict = {item['question_id']: item['total'] for item in question_totals}
@@ -305,7 +305,7 @@ def thankyou(request,id):
             'percentage': stat['percentage'],
         })
     # print(grouped_stats)
-    grouped_stats = dict(grouped_stats) #Defaultdict must be converted into dict, otherwise it will not be displayed
+    grouped_stats = dict(grouped_stats) #If defaultdict is not changed to dict, it will not be shown.
     # print(grouped_stats)
     context = {
         'survey_id': id,
