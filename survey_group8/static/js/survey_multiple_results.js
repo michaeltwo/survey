@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function getSurveyIdFromURL() {
     const segments = window.location.pathname.split('/');
-    return segments[segments.length - 2]; // Assuming the ID is the second last segment
+    return segments[segments.length - 2]; // Assuming the ID is the second last segment.
 }
 
 function fetchSurveyResults(surveyId) {
@@ -37,7 +37,7 @@ function updateSurveyInfo(data) {
 
 function renderResults(organizedQuestionData, totalRespondentsData) {
     const resultsContainer = document.getElementById('results-container');
-    resultsContainer.innerHTML = ''; // Clear any previous content
+    resultsContainer.innerHTML = ''; // Clear any of the previous content 
     for (const [questionText, questionData] of Object.entries(organizedQuestionData)) {
         const questionTable = createResultsTable(questionText, questionData, totalRespondentsData);
         resultsContainer.appendChild(questionTable);
@@ -50,7 +50,7 @@ function createResultsTable(questionText, questionData, totalRespondentsData) {
     table.style.borderCollapse = 'collapse';
     table.style.marginBottom = '20px';
 
-    // Create the first header row for "Question"
+    // Create the first header rows for the "Question"
     const questionHeaderRow = document.createElement('tr');
     questionHeaderRow.innerHTML = `
         <th style="border: 1px solid #ddd; padding: 8px;" colspan="${2 + totalRespondentsData.length}">
