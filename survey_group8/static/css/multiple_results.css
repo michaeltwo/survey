@@ -4,11 +4,11 @@
     padding: 20px 0; /* Remove horizontal padding to match the nav */
     background-color: #f9f9f9;
     border-radius: 0; /* Remove rounded corners */
-    box-shadow: none; /* Remove shadow */
-    box-sizing: border-box; /* Ensure padding is included in the total width */
+    box-shadow: none; /* Remove shadows */
+    box-sizing: border-box; /* Ensures the  padding is included in the total width */
 }
 
-/* Center and constrain content inside the container */
+/* Center and constrains content inside the container */
 .results-container .inner-container {
     max-width: 1200px; /* Limit the width of the content */
     margin: 0 auto; /* Center the content */
