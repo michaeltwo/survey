@@ -256,7 +256,7 @@ def qa_submit(request):
         republished_ver=survey.republished
         # 获取问题和答案，保存到 Result 表
         for question in survey.questions.all():
-            selected_answers = request.POST.getlist(f'question_{question.id}')  # 获取选择的答案
+            selected_answers = request.POST.getlist(f'question_{question.id}')  # Get selected answer
             
             for answer_id in selected_answers:
                 answer = get_object_or_404(Answers, id=answer_id)
