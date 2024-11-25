@@ -162,7 +162,7 @@ function renderBarChart(canvasId, questionData) {
             },
             plugins: {
                 legend: {
-                    position: 'top', // Adjust legend placement for larger charts
+                    position: 'top', // For larger charts, reposition the legend.
                 },
             },
         },

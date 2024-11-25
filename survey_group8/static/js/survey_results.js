@@ -23,8 +23,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const options = {
             responsive: true,
-            maintainAspectRatio: true, // Enable aspect ratio maintenance
-            aspectRatio: 2, // Adjust the width-to-height ratio (2 means width is 2x height)
+            maintainAspectRatio: true, // Allow for the maintenance of the aspect ratio
+            aspectRatio: 2, // Modify the ratio of width to height (2 indicates that width is 2x height).
             scales: {
                 y: {
                     beginAtZero: true,
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             plugins: {
                 legend: {
-                    display: false // Hide the legend for simplicity
+                    display: false // For simplicity, conceal the legend.
                 }
             }
         };
