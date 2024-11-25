@@ -254,7 +254,7 @@ def qa_submit(request):
         user = request.user
         survey = get_object_or_404(Surveys, id=survey_id)
         republished_ver=survey.republished
-        # Get questions and answers and save them to Result table
+        # Obtain the questions and responses, then store them in the Result table.
         for question in survey.questions.all():
             selected_answers = request.POST.getlist(f'question_{question.id}')  # Get selected answer
             
@@ -278,7 +278,7 @@ def thankyou(request,id):
     # print(results)
     stats = (
         results.values('question_id', 'answer_id')
-        .annotate(count=Count('id'))  # Number of responses per answer
+        .annotate(count=Count('id'))  # The quantity of answers for each response
     )
     print(stats)
     question_totals = (
