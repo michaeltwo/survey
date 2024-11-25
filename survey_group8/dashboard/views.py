@@ -283,7 +283,7 @@ def thankyou(request,id):
     print(stats)
     question_totals = (
         results.values('question_id')
-        .annotate(total=Count('id'))  # 每个问题的回答总数
+        .annotate(total=Count('id'))  # Total number of answers for each question
     )
     # print(question_totals)
     question_totals_dict = {item['question_id']: item['total'] for item in question_totals}
