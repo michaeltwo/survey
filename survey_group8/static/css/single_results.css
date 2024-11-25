@@ -1,4 +1,4 @@
-/* Container styling for results page */
+/* Container styling of the  results page */
 .results-container {
     max-width: 800px;
     margin: 0 auto;
@@ -6,7 +6,7 @@
     background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    overflow: hidden; /* Prevent overflow */
+    overflow: hidden; /* Prevents the  overflow */
 }
 
 /* Title and description styling */
@@ -22,7 +22,7 @@
     color: #666;
 }
 
-/* No responses message */
+/* Message for no Responses */
 .no-responses {
     text-align: center;
     font-size: 1.2em;
@@ -69,7 +69,7 @@
     color: #333;
 }
 
-/* Chart styling */
+/* Styling the Chart */
 .results-chart {
     margin-top: 20px;
     max-width: 60%; /* Constrain the chart width to 60% of the container */
@@ -81,7 +81,7 @@
     margin-right: auto; /* Center the chart */
 }
 
-/* Reset default canvas styling */
+/* Resets the  default canvas styling */
 canvas {
     max-width: 100%; /* Ensure the canvas never exceeds its parent container */
     height: auto; /* Maintain aspect ratio */
