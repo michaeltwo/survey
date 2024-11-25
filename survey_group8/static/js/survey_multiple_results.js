@@ -100,7 +100,7 @@ function createResultsTable(questionText, questionData, totalRespondentsData) {
     canvasRow.appendChild(canvasCell);
     table.appendChild(canvasRow);
 
-    // Render the bar chart after a brief delay
+    // After a short wait, render the bar chart.
     setTimeout(() => {
         renderBarChart(canvas.id, questionData);
     }, 0);
@@ -153,7 +153,7 @@ function renderBarChart(canvasId, questionData) {
         data: data,
         options: {
             responsive: true,
-            maintainAspectRatio: false, // Disable fixed aspect ratio to control size
+            maintainAspectRatio: false, // To manage size, turn off the fixed aspect ratio.
             scales: {
                 y: {
                     beginAtZero: true,
