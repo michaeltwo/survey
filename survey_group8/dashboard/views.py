@@ -260,7 +260,7 @@ def qa_submit(request):
             
             for answer_id in selected_answers:
                 answer = get_object_or_404(Answers, id=answer_id)
-                # 保存结果
+                
                 Results.objects.create(
                     survey_id=survey,
                     question_id=question,
