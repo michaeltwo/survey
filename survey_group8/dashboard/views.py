@@ -242,7 +242,7 @@ def survey_take(request):
 
 def qa_view(request, id):
     survey = Surveys.objects.prefetch_related('questions__answers').get(id=id, status='p')
-    # republished_ver=survey.republished #直接在前端引用
+    # republished_ver=survey.republished #Directly referenced on the front end
     user=request.user
     questions = survey.questions.all()
     return render(request, 'qa.html', {'survey': survey, 'questions': questions,'user':user})
