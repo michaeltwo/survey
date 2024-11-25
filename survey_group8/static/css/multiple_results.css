@@ -10,9 +10,9 @@
 
 /* Content inside the container is centered and constrained. */
 .results-container .inner-container {
-    max-width: 1200px; /* Limits the width of the content */
+    max-width: 1200px; /* restricts the content's width */
     margin: 0 auto; /* Center the content */
-    padding: 0 20px; /* Add padding for inner spacing */
+    padding: 0 20px; /* For inner space, add padding.  */
 }
 
 /* Styling the Title and description  */
