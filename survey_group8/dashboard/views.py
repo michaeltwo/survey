@@ -269,7 +269,7 @@ def qa_submit(request):
                     republished_version=republished_ver
                 )
         # return render(request,'thankyou.html')
-        return redirect('thankyou',id=survey_id) #pass the id as survey_id to thankyou
+        return redirect('thankyou',id=survey_id) #Pass the ID as survey_id to the thank you function
     return HttpResponse('Invalid request method.', status=405)
 
 def thankyou(request,id):
