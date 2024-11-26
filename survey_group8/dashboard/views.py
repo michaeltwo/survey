@@ -256,7 +256,7 @@ def qa_submit(request):
         republished_ver=survey.republished
         # Obtain the questions and responses, then store them in the Result table.
         for question in survey.questions.all():
-            selected_answers = request.POST.getlist(f'question_{question.id}')  # Get selected answer
+            selected_answers = request.POST.getlist(f'question_{question.id}')  # Retrieve selected answer
             
             for answer_id in selected_answers:
                 answer = get_object_or_404(Answers, id=answer_id)
