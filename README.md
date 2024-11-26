@@ -79,7 +79,7 @@ Please let us know if any confusion,
 
 Group: 8
 
-Group Members: Michael Fasching, Weihua Zheng, Dev Shah, Shubham Ganesh Junnarkar
+Group Members: Michael F, Weihua Z, Dev S, Shubham G J
 
 ## License
 This is just for TDS Final Project
