@@ -83,7 +83,7 @@ Group Members: Michael Fasching, Weihua Zheng, Dev Shah, Shubham Ganesh Junnarka
 
 ## License
 This is just for TDS Final Project
-Author: Michael Fasching, Weihua Zheng, Dev Shah, Shubham Ganesh Junnarkar
+Author: Michael F, Michael Z, Dev S, Shubham G J
 
 [MIT](https://choosealicense.com/licenses/mit/)
 
