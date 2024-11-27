@@ -22,6 +22,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 #handle static files such as js
+RUN mkdir -p /path/to/static && chown -R www-data:www-data /path/to/static
 RUN python manage.py collectstatic --noinput
 
 # 打开容器所需的端口
