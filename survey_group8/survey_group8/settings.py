@@ -135,3 +135,19 @@ LOGOUT_REDIRECT_URL = "home"
 
 # X_FRAME_OPTIONS = 'ALLOWALL'
 X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+#below are containize db settings
+# import os
+# from urllib.parse import urlparse
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv('POSTGRES_DB', 'postgres'),
+#         'USER': os.getenv('POSTGRES_USER', 'postgres'),
+#         'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'postgres'),
+#         'HOST': os.getenv('DB_HOST', 'localhost'),
+#         'PORT': os.getenv('DB_PORT', '5432'),
+#     }
+# }
+
