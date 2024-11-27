@@ -137,6 +137,7 @@ LOGOUT_REDIRECT_URL = "home"
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 #below are containize db settings
+#----------------------------------------------------
 # import os
 # from urllib.parse import urlparse
 
@@ -150,4 +151,11 @@ X_FRAME_OPTIONS = 'SAMEORIGIN'
 #         'PORT': os.getenv('DB_PORT', '5432'),
 #     }
 # }
+#静态文件配置
+# # 项目根目录
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# # 配置静态文件目录
+# STATIC_URL = '/static/'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+#-----------------------------------------------------
