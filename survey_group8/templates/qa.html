@@ -7,6 +7,40 @@
 {% endblock %}
 
 {% block content %}
+<iframe id="myf" src="{% url 'thankyou' id=survey.id %}" 
+        width="0" 
+        height="0" 
+        style="border: none; display: none;" 
+        onload="checkIframeContent()">
+</iframe>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var iframe = document.getElementById("myf");
+
+        iframe.onload = function () {
+            try {
+                var iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+
+                // 如果 iframe 有内容，则显示并动态调整宽高
+                if (iframeDocument.body.innerHTML.trim()) {
+                    iframe.style.display = "block";
+                    iframe.style.width = "100%";
+                    iframe.style.height = iframeDocument.body.scrollHeight + "px"; // 根据内容动态调整高度
+                } else {
+                    iframe.style.display = "none"; // 隐藏 iframe
+                    iframe.style.width = "0"; // 防止占位
+                    iframe.style.height = "0";
+                }
+            } catch (e) {
+                console.error("无法访问 iframe 内容，可能是跨域问题");
+            }
+        };
+    });
+</script>
+
+
+    
 <div class="survey-container">
     <form method="post" action="{% url 'qa_submit' %}">
         {% csrf_token %}

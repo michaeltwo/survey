@@ -37,4 +37,5 @@ urlpatterns = [
     path('qa/<int:id>/', views.qa_view, name='qa_view'),
     path('qa_submit/', views.qa_submit, name='qa_submit'),
     path('thankyou/<int:id>/', views.thankyou, name='thankyou'),
+    path('complete/',views.complete,name='complete'),
     ]

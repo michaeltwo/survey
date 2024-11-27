@@ -268,10 +268,12 @@ def qa_submit(request):
                     user_id=user,
                     republished_version=republished_ver
                 )
-        # return render(request,'thankyou.html')
-        return redirect('thankyou',id=survey_id) #Pass the ID as survey_id to the thank you function
+        return render(request,'complete.html')
+        # return redirect('complete')
+        # return redirect('thankyou',id=survey_id) #Pass the ID as survey_id to the thank you function
     return HttpResponse('Invalid request method.', status=405)
 
+# render thankyou to qa.html iframe as the wisdom crowed
 def thankyou(request,id):
     # print(id)
     results = Results.objects.filter(survey_id=id)
@@ -280,7 +282,7 @@ def thankyou(request,id):
         results.values('question_id', 'answer_id')
         .annotate(count=Count('id')) # The number of answers for each response
     )
-    print(stats)
+    # print(stats)
     question_totals = (
         results.values('question_id')
         .annotate(total=Count('id'))  # Total count of responses for each question
@@ -312,6 +314,12 @@ def thankyou(request,id):
         'grouped_stats': grouped_stats,  # {question_id: [{answer_id, count, percentage}, ...]}
     }
     return render(request, 'thankyou.html',context)
+
+def complete(request):
+    context={
+        "data":"Survey Complete, Thank You For Your cooperation!"
+    }
+    return render(request, 'complete.html',context)
 
 
     
