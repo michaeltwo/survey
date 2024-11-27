@@ -23,10 +23,10 @@ from db_config import DATABASES as external_database
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-j9q3mm6wpn0nw1d8h-dk4u-59t1wab@+5172+hwd%8me2md))='
+SECRET_KEY = os.getenv('SECRET_KEY', 'default-secret-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG =os.getenv('DEBUG', True)
 
 ALLOWED_HOSTS = []
 
@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'survey_group8.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = external_database
+# DATABASES = external_database
 
 
 # Password validation
@@ -138,24 +138,24 @@ X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 #below are containize db settings
 #----------------------------------------------------
-# import os
-# from urllib.parse import urlparse
+import os
+from urllib.parse import urlparse
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': os.getenv('POSTGRES_DB', 'postgres'),
-#         'USER': os.getenv('POSTGRES_USER', 'postgres'),
-#         'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'postgres'),
-#         'HOST': os.getenv('DB_HOST', 'localhost'),
-#         'PORT': os.getenv('DB_PORT', '5432'),
-#     }
-# }
-#静态文件配置
-# # 项目根目录
-# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('POSTGRES_DB', 'postgres'),
+        'USER': os.getenv('POSTGRES_USER', 'postgres'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'postgres'),
+        'HOST': os.getenv('DB_HOST', 'localhost'),
+        'PORT': os.getenv('DB_PORT', '5432'),
+    }
+}
 
-# # 配置静态文件目录
+# 项目根目录
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# 配置静态文件目录
 # STATIC_URL = '/static/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 #-----------------------------------------------------
