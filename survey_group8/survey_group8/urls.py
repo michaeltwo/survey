@@ -18,6 +18,8 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic.base import TemplateView
 from dashboard import views
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -38,4 +40,4 @@ urlpatterns = [
     path('qa_submit/', views.qa_submit, name='qa_submit'),
     path('thankyou/<int:id>/', views.thankyou, name='thankyou'),
     path('complete/',views.complete,name='complete'),
-    ]
+    ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

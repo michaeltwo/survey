@@ -4,10 +4,9 @@ services:
   web:
     image: docker.io/fountain0/survey_group8:latest
     container_name: survey_app
-    command: gunicorn --bind 0.0.0.0:8000 survey_group8.wsgi:application
+    command: /bin/bash -c "python manage.py makemigrations && python manage.py migrate && gunicorn --bind 0.0.0.0:8000 survey_group8.wsgi:application"
     restart: always
     volumes:
-      - .:/app
       - static_data:/app/staticfiles
     ports:
       - "8000:8000"
@@ -26,6 +25,6 @@ services:
     ports:
       - "5432:5432"
 volumes:
-  vol: {}  # Define the 'vol' volume at the top level
+  static_data: {}  # Define the 'vol' volume at the top level
   postgres_data: {}  # Define the 'postgres_data' volume at the top level
 
