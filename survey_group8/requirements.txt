@@ -21,7 +21,6 @@ elastic-transport==8.15.1
 elasticsearch==8.16.0
 elasticsearch-dsl==8.11.0
 filelock==3.16.1
-gensim==4.3.3
 hyperlink==21.0.0
 idna==3.10
 incremental==24.7.2

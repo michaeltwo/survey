@@ -20,6 +20,10 @@ COPY . /app/
 # 设置环境变量（生产时可调试为 False）
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
+#adding entrypoint.sh to run python manage.py migrate
+COPY entrypoint.sh /scripts/entrypoint.sh
+RUN chmod +x /scripts/wait-for-it.sh
+ENTRYPOINT ["/entrypoint.sh"]
 
 #handle waiting time to make sure db started
 COPY wait-for-it.sh /scripts/wait-for-it.sh

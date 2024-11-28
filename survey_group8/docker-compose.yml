@@ -4,7 +4,7 @@ services:
   web:
     image: docker.io/fountain0/survey_group8:latest
     container_name: survey_app
-    command: bash -c "./scripts/wait-for-it.sh db:5432 -- python manage.py makemigrations && python manage.py migrate && gunicorn --bind 0.0.0.0:8000 myproject.wsgi:application"
+    command: bash -c "./scripts/wait-for-it.sh db:5432 -- python manage.py makemigrations && python manage.py migrate && gunicorn --bind 0.0.0.0:8000 survey_group8.wsgi:application"
     restart: always
     volumes:
       - static_data:/app/staticfiles
