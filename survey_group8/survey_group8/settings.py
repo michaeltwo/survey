@@ -139,6 +139,7 @@ LOGOUT_REDIRECT_URL = "home"
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 #below are containize db settings
+# pip install dj-database-url, DATABASE_URL=postgres://yourusername:yourpassword@db:5432/yourdatabase
 #----------------------------------------------------
 import os
 from urllib.parse import urlparse
