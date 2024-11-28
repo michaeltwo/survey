@@ -35,7 +35,7 @@ def categorize_surveys(surveys):
 
 def home(request):
     if request.user.groups.filter(name='Creator').exists():
-        survey_all = Surveys.objects.select_related('user_id').all().order_by('id')
+        survey_all = Surveys.objects.filter(user_id=request.user.id).order_by('id')
         draft_surveys, published_surveys, closed_surveys = categorize_surveys(survey_all)
     
         survey_context = {
