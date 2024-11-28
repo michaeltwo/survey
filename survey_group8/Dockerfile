@@ -21,6 +21,10 @@ COPY . /app/
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
+#handle waiting time to make sure db started
+COPY wait-for-it.sh /scripts/wait-for-it.sh
+RUN chmod +x /scripts/wait-for-it.sh
+
 #handle static files such as js
 RUN mkdir -p /path/to/static && chown -R www-data:www-data /path/to/static
 RUN python manage.py collectstatic --noinput
