@@ -21,17 +21,16 @@ COPY . /app/
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 #adding entrypoint.sh to run python manage.py migrate
-COPY entrypoint.sh /scripts/entrypoint.sh
-RUN chmod +x /scripts/wait-for-it.sh
-ENTRYPOINT ["/entrypoint.sh"]
-
 #handle waiting time to make sure db started
+COPY entrypoint.sh /scripts/entrypoint.sh
 COPY wait-for-it.sh /scripts/wait-for-it.sh
+RUN chmod +x /scripts/entrypoint.sh
 RUN chmod +x /scripts/wait-for-it.sh
+#container 启动时候执行entrypoint.sh
+ENTRYPOINT ["/scripts/entrypoint.sh"]
 
 #handle static files such as js
 RUN mkdir -p /path/to/static && chown -R www-data:www-data /path/to/static
-RUN python manage.py collectstatic --noinput
 
 # 打开容器所需的端口
 EXPOSE 8000
