@@ -13,23 +13,25 @@ Installation steps as below:
  - For windows, just download the package form https://www.docker.com/products/docker-desktop/, and install it.
    
  Run the app
- - copy the docker-compose.yml file and credential file .env to the same folder
- - start a command/cli window, and cd to the folder mentioned above step, then run below command
+ - Copy the docker-compose.yml file and credential file .env to the same folder
+ - Start a command/cli window, and cd to the folder mentioned above step, then run below command
 ```bash
 docker-compose up -d
 ```
-app guide:
-if it is running locally, just open a web brower and type in <http://127.0.0.1:8000>
+App guide:
+If it is running locally, just open a web brower and type in <http://127.0.0.1:8000>
 
-if it is running in a server, please input the server ip address <http://serverIP:8000>
+If it is running in a server, please input the server ip address <http://serverIP:8000>
+
+(optional)If domain name and certificate are required, just binding it to your domain,setup Dns,import certificate.)
 
 ## Usage
 
-1. register a user, if you already have an account, can perform login directly
+1. Register a user, if you already have an account, can perform login directly
 
-2. survey taker and survey craeter
+2. Survey taker and survey craeter
 
-3. click on logout, after operate done. 
+3. Click on logout, after operate done. 
 
 NOTE. Remember your username and password
 
