@@ -15,6 +15,7 @@ Installation steps as below:
  Run the app
  - Copy the docker-compose.yml file and credential file .env to the same folder
  - Start a command/cli window, and cd to the folder mentioned above step, then run below command
+   
 For docker:
 ```bash
 docker-compose up -d
