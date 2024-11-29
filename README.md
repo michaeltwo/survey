@@ -37,7 +37,7 @@ If it is running in a server, please input the server ip address <http://serverI
 
 1. Register a user, if you already have an account, can perform login directly
 
-2. Survey taker and survey craeter
+2. Survey taker and survey creater
 
 3. Click on logout, after operate done. 
 
