@@ -10,7 +10,7 @@ Prerequsites: docker. make sure port 8000(web),5432(db) are free.
 
 Installation steps as below:
  - For linux, just use apt install docker (debain), yum install docker(redhat).(specific any version if needed)
- - For windows, just download the package form (https://www.docker.com/products/docker-desktop/), and install it.
+ - For windows, just download the package form https://www.docker.com/products/docker-desktop/, and install it.
    
  Run the app
  - copy the docker-compose.yml file and credential file .env to the same folder
