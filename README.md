@@ -9,7 +9,7 @@ Running Environment: Docker or Podman. Redhat-9.1 podman-5.2.2 tested
 Prerequsites: docker. make sure port 8000(web),5432(db) are free.
 
 Installation steps as below:
- - For linux, just use apt install docker (debain), yum install docker(redhat).(specific any version if needed)
+ - For linux, just use apt install docker (debain), yum install docker(redhat).(specify any versions if needed)
  - For windows or mac, just download the package form https://www.docker.com/products/docker-desktop/, and install it.
    
  Run the app
