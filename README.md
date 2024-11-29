@@ -15,10 +15,17 @@ Installation steps as below:
  Run the app
  - Copy the docker-compose.yml file and credential file .env to the same folder
  - Start a command/cli window, and cd to the folder mentioned above step, then run below command
+For docker:
 ```bash
 docker-compose up -d
 ```
+For podman
+```
+podman-compose up -d
+```
+
 App guide:
+
 If it is running locally, just open a web brower and type in <http://127.0.0.1:8000>
 
 If it is running in a server, please input the server ip address <http://serverIP:8000>
