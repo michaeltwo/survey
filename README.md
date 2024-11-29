@@ -31,7 +31,7 @@ If it is running locally, just open a web brower and type in <http://127.0.0.1:8
 
 If it is running in a server, please input the server ip address <http://serverIP:8000>
 
-(optional)If domain name and certificate are required, just binding it to your domain,setup Dns,import certificate.)
+(optional)If domain name and certificate are required, just binding it to your domain,setup DNS,import certificate.)
 
 ## Usage
 
