@@ -2,65 +2,26 @@
 
 This is an survey management system for TDS Final Project
 
-Running Environment: Python 3.12.5, django 5.1.1, postgresql 16.4, MS-win11 local tested
+Running Environment: Docker or Podman. Redhat-9.1 podman-5.2.2 tested
 
 ## Installation
 
-Prerequsites: python, django, pipenv(optional). make sure port 8000(web),5432(sql) are free.
+Prerequsites: docker. make sure port 8000(web),5432(db) are free.
 
 Installation steps as below:
- - For python installation, if you are using linux, just using apt install(debain), yum install python(redhat). If you are using windows, just download the package form <https://www.python.org/downloads/>, and install it.
- - For django and pipenv, steps as below
- 
+ - For linux, just use apt install(debain), yum install python(redhat).
+ - For windows, just download the package form <(https://www.docker.com/products/docker-desktop/)>, and install it.
+   
+ Run the app
+ - copy the docker-compose.yml file and credential file .env to the same folder
+ - start a command/cli window, and cd to the folder mentioned above step, then run below command
 ```bash
-pip install pipenv
-pip install django
+docker-compose up -d
 ```
-After all installtion done. open a cmd command, and input below commands to check the if environment are good to run.
-Make sure django is running by type below command, if version number shows, then you are good to go
->python --version
+app guide:
+if it is running locally, just open a web brower and type in <http://127.0.0.1:8000>
 
->django-admin --version
-
-(optional), if you want to run code in pipenv, you should start a pipenv shell to create a virtual environment.
-
-Then go below steps:
-
-1. git clone https://github.com/michaeltwo/survey.git
-unzip and copy files into a folder and cd to the survey_group8 folder, for example c:\
-
-```bash
-cd c:\survey_group8
-```
-2. setup database connections, create a database and update the database settings in settings.py
-
-edit c:\survey_group8\survey_group8\settings.py, as below:
-
-```bash
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'testdb', #use the database name you created
-        'USER': 'postgres', #database username
-        'PASSWORD': 'password', #database password
-        'HOST': 'localhost',  # Set to the DB server IP if using a remote DB
-        'PORT': '5432',        # Default PostgreSQL port
-    }
-}
-```
-3. run django migration to create tables in postgres database
-```bash
-cd c:\survey_group8
-python manage.py makemigrations
-python manage.py migrate
-```
-
-4. run server using below command
->python manage.py runserver
-
-5. if it is running locally, just open a web brower and type in <http://127.0.0.1:8000>
-
-   if it is running in a server, please input the server ip address <http://serverIP:8000>
+if it is running in a server, please input the server ip address <http://serverIP:8000>
 
 ## Usage
 
