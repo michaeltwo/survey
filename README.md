@@ -25,7 +25,7 @@ For podman
 podman-compose up -d
 ```
 
-App guide:
+## App guide:
 
 If it is running locally, just open a web brower and type in <http://127.0.0.1:8000>
 
@@ -33,7 +33,7 @@ If it is running in a server, please input the server ip address <http://serverI
 
 (optional)If domain name and certificate are required, just binding it to your domain,setup DNS,import certificate.)
 
-## Usage
+### App manipulation
 
 1. Register a user, if you already have an account, can perform login directly
 
