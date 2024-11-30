@@ -6,7 +6,7 @@ Running Environment: Docker or Podman. Redhat-9.1 podman-5.2.2 tested
 
 ## Installation
 
-Prerequsites: docker. make sure port 8000(web),5432(db) are free.
+Prerequsites: docker, docker-compose.yml, .env file(NOTE, .env file is for credentials, please use the one uploaded in brightspace). make sure port 8000(web),5432(db) are free,
 
 Installation steps as below:
  - For linux, just use apt install docker (debain), yum install docker(redhat).(specify any versions if needed)
