@@ -33,7 +33,7 @@ ENTRYPOINT ["/scripts/entrypoint.sh"]
 RUN python manage.py collectstatic --noinput
 
 # 如果需要，给静态文件目录设置权限（可选）
-RUN mkdir -p /app/staticfiles && chown -R www-data:www-data /app/staticfiles
+#RUN mkdir -p /app/staticfiles && chown -R www-data:www-data /app/staticfiles
 #handle static files such as js
 #RUN mkdir -p /path/to/static && chown -R www-data:www-data /path/to/static
 
