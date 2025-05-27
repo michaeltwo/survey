@@ -159,6 +159,9 @@ DATABASES = {
 # # 项目根目录
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+#force /survey
+FORCE_SCRIPT_NAME = '/survey'
+
 # 配置静态文件目录
 # STATIC_URL = '/static/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
