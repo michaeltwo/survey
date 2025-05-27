@@ -29,8 +29,13 @@ RUN chmod +x /scripts/wait-for-it.sh
 #container 启动时候执行entrypoint.sh
 ENTRYPOINT ["/scripts/entrypoint.sh"]
 
+# ⚠️ 一定要放在复制完代码之后
+RUN python manage.py collectstatic --noinput
+
+# 如果需要，给静态文件目录设置权限（可选）
+RUN mkdir -p /app/staticfiles && chown -R www-data:www-data /app/staticfiles
 #handle static files such as js
-RUN mkdir -p /path/to/static && chown -R www-data:www-data /path/to/static
+#RUN mkdir -p /path/to/static && chown -R www-data:www-data /path/to/static
 
 # 打开容器所需的端口
 EXPOSE 8000
