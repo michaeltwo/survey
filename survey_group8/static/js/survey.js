@@ -118,7 +118,7 @@ document.getElementById('surveyCreateForm').addEventListener('submit', function(
         }
     });
 
-    fetch('/create/', {
+    fetch('/survey/create/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
