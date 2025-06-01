@@ -160,7 +160,7 @@ DATABASES = {
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 #force /survey
-#FORCE_SCRIPT_NAME = '/survey'
+FORCE_SCRIPT_NAME = '/survey'
 
 # 配置静态文件目录
 # STATIC_URL = '/static/'
