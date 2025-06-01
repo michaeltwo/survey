@@ -134,7 +134,7 @@ document.getElementById('surveyEditForm').addEventListener('submit', function(ev
         })
         .then(data => {
             console.log('Success:', data);
-            window.location.href = '/';
+            window.location.href = '/survey';
         })
         .catch(error => {
             console.error('Error:', error);
