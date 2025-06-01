@@ -120,7 +120,7 @@ document.getElementById('surveyEditForm').addEventListener('submit', function(ev
 
     const surveyId = this.getAttribute('data-survey-id');
 
-    fetch(`/edit/${surveyId}`, {
+    fetch(`/survey/edit/${surveyId}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
