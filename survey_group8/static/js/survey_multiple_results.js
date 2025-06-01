@@ -9,7 +9,7 @@ function getSurveyIdFromURL() {
 }
 
 function fetchSurveyResults(surveyId) {
-    fetch(`/results/closed/${surveyId}/`, {
+    fetch(`/survey/results/closed/${surveyId}/`, {
         method: 'GET',
         headers: {
             'X-Requested-With': 'XMLHttpRequest',
